@@ -1,0 +1,52 @@
+
+
+no-permission: '&cYou do not have permission to do this.'
+could-not-find-user: '&cCould not find that user.'
+
+# Time Text
+years: 'years'
+year: 'year'
+months: 'months'
+month: 'month'
+weeks: 'weeks'
+week: 'week'
+days: 'days'
+day: 'day'
+hours: 'hours'
+hour: 'hour'
+seconds: 'seconds'
+second: 'second'
+
+# General
+
+silent-prefix: '&8[&cSilent&8] '
+
+# Bans
+# Placeholders Available (depends on command): %player%, %length%, %reason%
+ban-failed-overwrite: '&cThat player is already banned and you are unable to overwrite bans.'
+
+banned-player-permanent: '&cYou have banned &4%player%.'
+banned-player-permanent-overwrite: '&cYou have overwritten &4%player%&c''s previous ban.'
+banned-player-permanent-reason: '&cYou have banned &4%player% &cfor "%reason%".'
+banned-player-permanent-overwrite-reason: '&cYou have overwritten &4%player%&c''s previous ban and banned them for "%reason%".'
+
+banned-player-temporary: '&cYou have temporarily banned &4%player% &cfor %length%.'
+banned-player-temporary-reason: '&cYou have temporarily banned &4%player% &cfor %length% with the reason %reason%.'
+banned-player-temporary-overwrite: '&cYou have overwritten &4%player%&c''s previous ban and temporarily banned them for %length%.'
+banned-player-temporary-overwrite-reason: '&cYou have overwritten &4%player%&c''s previous ban and temporarily banned them for %length% with the reason %reason%.'
+
+# Available placeholders for the below 2 messages: %player%, %time%, %reason%, %executor%
+ban-kick-message-permanent:
+  - "&cYou have been permanently banned from www.titanlabs.dev"
+  - ""
+  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+
+ban-kick-message-temporary:
+  - "&cYou have been banned from www.titanlabs.dev"
+  - ""
+  - "&cYour ban will expire in &4%length%"
+  - ""
+  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+  - ""
+
+
