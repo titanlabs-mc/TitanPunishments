@@ -7,6 +7,7 @@ public class Note {
     private final UUID executor;
     private final long noteTime;
     private long lastEditTime;
+    private UUID lastEditor;
     private String contents;
 
     public Note(String contents, UUID subject, UUID executor) {
@@ -15,6 +16,7 @@ public class Note {
         this.executor = executor;
         this.noteTime = System.currentTimeMillis();
         this.lastEditTime = System.currentTimeMillis();
+        this.lastEditor = executor;
     }
 
     public UUID getSubject() {
@@ -37,12 +39,17 @@ public class Note {
         this.lastEditTime = lastEditTime;
     }
 
+    public UUID getLastEditor() {
+        return this.lastEditor;
+    }
+
     public String getContents() {
         return this.contents;
     }
 
-    public void updateContents(String contents) {
-        this.contents = contents;
+    public void updateContents(String contents, UUID editor) {
         this.lastEditTime = System.currentTimeMillis();
+        this.lastEditor = editor;
+        this.contents = contents;
     }
 }

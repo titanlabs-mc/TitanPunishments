@@ -1,6 +1,13 @@
 name: TitanPunishment
 version: ${project.version}
 main: dev.titanlabs.punishment.Punishment
-api-version: 1.13
-authors: [Zak, Hyfe]
+api-version: '1.13'
+authors: [Zak Shearman, Hyfe]
 website: www.titanlabs.dev
+
+commands:
+  titanpunish:
+    description: Informative Command
+    aliases:
+      - titanpunishments
+      - punishments

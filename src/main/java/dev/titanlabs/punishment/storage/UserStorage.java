@@ -22,7 +22,7 @@ public class UserStorage extends Storage<User> {
 
     @Override
     public Deserializer<User> deserializer() {
-        return(json, gson) -> {
+        return (json, gson) -> {
             UUID uuid = FastUUID.parseUUID(json.get("uuid").getAsString());
             return new User(uuid);
         };

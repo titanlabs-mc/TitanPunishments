@@ -4,7 +4,9 @@ import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.cache.listener.ConnectionListener;
 import dev.titanlabs.punishment.commands.ban.BanCommand;
+import dev.titanlabs.punishment.commands.titanpunish.TitanPunishCommand;
 import dev.titanlabs.punishment.config.Lang;
+import dev.titanlabs.punishment.registry.ArgumentRegistry;
 import dev.titanlabs.punishment.storage.IpStorage;
 import dev.titanlabs.punishment.storage.UserStorage;
 import me.hyfe.simplespigot.config.Config;
@@ -29,11 +31,16 @@ public final class Punishment extends SpigotPlugin {
         this.userCache = new UserCache(this);
 
         this.registerCommands(
-                new BanCommand(this, "ban", "titanpunish.ban", true)
+                new BanCommand(this, "ban", "titanpunish.ban", true),
+                new TitanPunishCommand(this, "titanpunish", "", true)
         );
 
         this.registerListeners(
                 new ConnectionListener(this)
+        );
+
+        this.registerRegistries(
+                new ArgumentRegistry(this)
         );
     }
 
