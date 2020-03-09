@@ -5,7 +5,9 @@ import dev.titanlabs.punishment.Punishment;
 import me.hyfe.simplespigot.config.Config;
 import me.hyfe.simplespigot.text.Replace;
 import me.hyfe.simplespigot.text.Text;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Map;
 
@@ -51,6 +53,14 @@ public class Lang {
 
         public String string() {
             return this.message;
+        }
+
+        public void to(String permission) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission(permission)) {
+                    Text.sendMessage(player, this.message);
+                }
+            }
         }
 
         public void to(CommandSender sender) {

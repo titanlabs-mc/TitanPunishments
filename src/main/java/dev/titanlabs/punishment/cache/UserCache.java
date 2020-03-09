@@ -6,8 +6,6 @@ import dev.titanlabs.punishment.objects.user.User;
 import dev.titanlabs.punishment.storage.IpStorage;
 import dev.titanlabs.punishment.storage.UserStorage;
 import me.hyfe.simplespigot.cache.FutureCache;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -27,8 +25,7 @@ public class UserCache extends FutureCache<UUID, User> {
             if (!optionalUser.isPresent()) {
                 User user = this.storage.load(FastUUID.toString(uuid));
                 if (user == null) {
-                    Player player = Bukkit.getPlayer(uuid);
-                    return this.set(uuid, new User(uuid, this.ipStorage.load(player.getAddress().getAddress().getHostAddress())));
+                    return this.set(uuid, new User(uuid));
                 }
                 return this.set(uuid, user);
             }

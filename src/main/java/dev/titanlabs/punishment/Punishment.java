@@ -1,5 +1,6 @@
 package dev.titanlabs.punishment;
 
+import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.cache.listener.ConnectionListener;
 import dev.titanlabs.punishment.commands.ban.BanCommand;
@@ -14,8 +15,9 @@ import java.nio.file.Path;
 public final class Punishment extends SpigotPlugin {
     private Lang lang;
     private UserStorage userStorage;
-    private UserCache userCache;
     private IpStorage ipStorage;
+    private UserCache userCache;
+    private IpCache ipCache;
 
     @Override
     public void onEnable() {
@@ -23,6 +25,7 @@ public final class Punishment extends SpigotPlugin {
 
         this.userStorage = new UserStorage(this);
         this.ipStorage = new IpStorage(this);
+        this.ipCache = new IpCache(this);
         this.userCache = new UserCache(this);
 
         this.registerCommands(
@@ -47,12 +50,16 @@ public final class Punishment extends SpigotPlugin {
         return this.userStorage;
     }
 
+    public IpStorage getIpStorage() {
+        return this.ipStorage;
+    }
+
     public UserCache getUserCache() {
         return this.userCache;
     }
 
-    public IpStorage getIpStorage() {
-        return this.ipStorage;
+    public IpCache getIpCache() {
+        return this.ipCache;
     }
 
     public Config getConfig(String name) {
