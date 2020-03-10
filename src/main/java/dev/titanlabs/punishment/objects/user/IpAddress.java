@@ -15,6 +15,11 @@ public class IpAddress {
         this.uniqueIds.add(uuid);
     }
 
+    public IpAddress(String address, Set<UUID> uniqueIds) {
+        this.address = address;
+        this.uniqueIds = uniqueIds;
+    }
+
     public String getAddress() {
         return this.address;
     }

@@ -76,6 +76,7 @@ public final class Punishment extends SpigotPlugin {
     public void registerConfigs() {
         this.getConfigStore()
                 .config("settings", Path::resolve, true)
+                .config("lang", Path::resolve, true)
                 .common("storageMethod", "settings", config -> config.string("storage.storage-method"));
         this.lang = new Lang(this);
     }

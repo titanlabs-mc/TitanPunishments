@@ -25,8 +25,21 @@ public class User {
     private Set<IpAddress> ipAddresses = Sets.newHashSet();
 
     public User(UUID uuid) {
-        this.player = Bukkit.getPlayer(uuid);
         this.uuid = uuid;
+        this.player = Bukkit.getPlayer(uuid);
+    }
+
+    public User(UUID uuid, Set<Ban> bans, Ban activeBan, Set<Mute> mutes, Mute activeMute, Set<Warning> warnings, Set<Warning> activeWarnings, Set<Kick> kicks, Set<IpAddress> ipAddresses) {
+        this.uuid = uuid;
+        this.player = Bukkit.getPlayer(uuid);
+        this.bans = bans;
+        this.activeBan = activeBan;
+        this.mutes = mutes;
+        this.activeMute = activeMute;
+        this.warnings = warnings;
+        this.activeWarnings = activeWarnings;
+        this.kicks = kicks;
+        this.ipAddresses = ipAddresses;
     }
 
     public Player getPlayer() {
