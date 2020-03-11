@@ -26,6 +26,7 @@ public class ArgumentRegistry implements Registry {
     @Override
     public void register() {
         this.commandBase.registerArgumentType(User.class, input -> {
+            Bukkit.broadcastMessage("1");
             Player player = Bukkit.getPlayerExact(input);
             return player == null ? Optional.empty() : this.userCache.getSync(player.getUniqueId());
         }).registerArgumentType(IpAddress.class, this.ipCache::getSync);

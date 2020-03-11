@@ -5,6 +5,7 @@ import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.objects.user.User;
 import dev.titanlabs.punishment.storage.UserStorage;
 import me.hyfe.simplespigot.cache.FutureCache;
+import org.bukkit.Bukkit;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +20,9 @@ public class UserCache extends FutureCache<UUID, User> {
 
     public CompletableFuture<User> load(UUID uuid) {
         return this.get(uuid).thenApply(optionalUser -> {
+            Bukkit.broadcastMessage("a");
             if (!optionalUser.isPresent()) {
+                Bukkit.broadcastMessage("b");
                 User user = this.userStorage.load(FastUUID.toString(uuid));
                 if (user == null) {
                     return this.set(uuid, new User(uuid));
@@ -27,6 +30,9 @@ public class UserCache extends FutureCache<UUID, User> {
                 return this.set(uuid, user);
             }
             return optionalUser.get();
+        }).exceptionally(throwable -> {
+            throwable.printStackTrace();
+            return null;
         });
     }
 

@@ -21,7 +21,9 @@ public class BanCommand extends SimpleCommand<CommandSender> {
     }
 
     @Override
-    public void onExecute(CommandSender commandSender, String[] strings) {
-        this.lang.get("ban-command-usage").to(commandSender);
+    public void onExecute(CommandSender sender, String[] strings) {
+        System.out.println(this.lang);
+        System.out.println(this.lang.get("ban-command-usage"));
+        this.lang.get("ban-command-usage").to(sender);
     }
 }

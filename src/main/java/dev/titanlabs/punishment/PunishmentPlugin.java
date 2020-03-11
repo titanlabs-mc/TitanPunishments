@@ -82,6 +82,6 @@ public final class PunishmentPlugin extends SpigotPlugin {
                 .config("settings", Path::resolve, true)
                 .config("lang", Path::resolve, true)
                 .common("storageMethod", "settings", config -> config.string("storage.storage-method"));
-        // this.lang = new Lang(this); An array list is not a string
+        this.lang = new Lang(this);
     }
 }

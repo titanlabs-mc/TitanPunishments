@@ -9,12 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class Lang {
-    private final Punishment plugin;
-    private Map<String, Object> langContent = Maps.newHashMap();
+    private final PunishmentPlugin plugin;
+    private Map<String, List<String>> langContent = Maps.newHashMap();
 
     public Lang(PunishmentPlugin plugin) {
         this.plugin = plugin;
@@ -24,9 +25,8 @@ public class Lang {
     public void load() {
         Config config = this.plugin.getConfig("lang");
         for (String key : config.keys("", false)) {
-
-            System.out.println("PUTTING: ".concat(key));
-            this.langContent.put(key, config.get(key));
+            Object value = config.get(key);
+            this.langContent.put(key, value instanceof String ? Collections.singletonList(config.get(key)) : config.get(key));
         }
     }
 
@@ -35,9 +35,9 @@ public class Lang {
     }
 
     public SubLang get(String id, Replace replace) {
-        Object requested = this.langContent.get(id);
+        List<String> requested = this.langContent.get(id);
 
-        if (requested == null) {
+        if (requested == null || requested.isEmpty()) {
             System.out.println("^^^^^^^^^^ -[TitanPunishment]- ^^^^^^^^^^");
             System.out.println(" ");
             System.out.println("Missing the configuration value '".concat(id).concat("', located in the file 'lang.yml'"));
@@ -45,7 +45,6 @@ public class Lang {
             System.out.println("^^^^^^^^^^ -[TitanPunishment]- ^^^^^^^^^^");
             return null;
         }
-
         return new SubLang(Text.modify(requested, replace));
     }
 
@@ -56,11 +55,11 @@ public class Lang {
             this.message = message;
         }
 
-        public List<String> string() {
+        public List<String> list() {
             return this.message;
         }
 
-        public String sendableString() {
+        public String compatibleString() {
             StringBuilder stringBuilder = new StringBuilder();
             for (String line : this.message) {
                 stringBuilder.append(line.concat("\n"));
@@ -71,13 +70,13 @@ public class Lang {
         public void to(String permission) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission(permission)) {
-                    Text.sendMessage(player, this.sendableString());
+                    Text.sendMessage(player, this.compatibleString());
                 }
             }
         }
 
         public void to(CommandSender sender) {
-            Text.sendMessage(sender, this.sendableString());
+            Text.sendMessage(sender, this.compatibleString());
         }
     }
 }

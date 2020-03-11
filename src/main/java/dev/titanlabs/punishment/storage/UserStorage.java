@@ -8,7 +8,7 @@ import dev.titanlabs.punishment.objects.punishments.Mute;
 import dev.titanlabs.punishment.objects.punishments.Warning;
 import dev.titanlabs.punishment.objects.user.IpAddress;
 import dev.titanlabs.punishment.objects.user.User;
-import me.hyfe.simplespigot.json.TypeTokens;
+import me.hyfe.simplespigot.json.Token;
 import me.hyfe.simplespigot.storage.storage.Storage;
 import me.hyfe.simplespigot.storage.storage.load.Deserializer;
 import me.hyfe.simplespigot.storage.storage.load.Serializer;
@@ -42,14 +42,14 @@ public class UserStorage extends Storage<User> {
     public Deserializer<User> deserializer() {
         return (json, gson) -> {
             UUID uuid = FastUUID.parseUUID(json.get("uuid").getAsString());
-            Set<Ban> bans = gson.fromJson("bans", TypeTokens.findType());
-            Ban lastKnownActiveBan = gson.fromJson("lastKnownActiveBan", TypeTokens.findType());
-            Set<Mute> mutes = gson.fromJson("mutes", TypeTokens.findType());
-            Mute lastKnownActiveMute = gson.fromJson("lastKnownActiveMute", TypeTokens.findType());
-            Set<Warning> warnings = gson.fromJson("warnings", TypeTokens.findType());
-            Set<Warning> lastKnownActiveWarnings = gson.fromJson("lastKnownActiveWarnings", TypeTokens.findType());
-            Set<Kick> kicks = gson.fromJson("kicks", TypeTokens.findType());
-            Set<IpAddress> ipAddresses = gson.fromJson("ipAddresses", TypeTokens.findType());
+            Set<Ban> bans = gson.fromJson("bans", new Token<Set<Ban>>().type());
+            Ban lastKnownActiveBan = gson.fromJson("lastKnownActiveBan", new Token<Ban>().type());
+            Set<Mute> mutes = gson.fromJson("mutes", new Token<Set<Mute>>().type());
+            Mute lastKnownActiveMute = gson.fromJson("lastKnownActiveMute", new Token<Mute>().type());
+            Set<Warning> warnings = gson.fromJson("warnings", new Token<Set<Warning>>().type());
+            Set<Warning> lastKnownActiveWarnings = gson.fromJson("lastKnownActiveWarnings", new Token<Set<Warning>>().type());
+            Set<Kick> kicks = gson.fromJson("kicks", new Token<Set<Kick>>().type());
+            Set<IpAddress> ipAddresses = gson.fromJson("ipAddresses", new Token<Set<IpAddress>>().type());
             return new User(uuid, bans, lastKnownActiveBan, mutes, lastKnownActiveMute, warnings, lastKnownActiveWarnings, kicks, ipAddresses);
         };
     }
