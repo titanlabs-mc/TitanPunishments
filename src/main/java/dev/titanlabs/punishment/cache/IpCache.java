@@ -1,6 +1,6 @@
 package dev.titanlabs.punishment.cache;
 
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.objects.user.IpAddress;
 import dev.titanlabs.punishment.storage.IpStorage;
 import me.hyfe.simplespigot.cache.FutureCache;
@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 public class IpCache extends FutureCache<String, IpAddress> {
     private final IpStorage storage;
 
-    public IpCache(Punishment plugin) {
+    public IpCache(PunishmentPlugin plugin) {
         super(plugin);
         this.storage = plugin.getIpStorage();
     }

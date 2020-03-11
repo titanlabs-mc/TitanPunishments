@@ -1,6 +1,6 @@
 package dev.titanlabs.punishment.registry;
 
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.objects.user.IpAddress;
@@ -17,7 +17,7 @@ public class ArgumentRegistry implements Registry {
     private final IpCache ipCache;
     private final UserCache userCache;
 
-    public ArgumentRegistry(Punishment plugin) {
+    public ArgumentRegistry(PunishmentPlugin plugin) {
         this.commandBase = plugin.getCommandBase();
         this.ipCache = plugin.getIpCache();
         this.userCache = plugin.getUserCache();

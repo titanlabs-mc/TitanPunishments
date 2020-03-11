@@ -1,6 +1,6 @@
 name: TitanPunishment
 version: ${project.version}
-main: dev.titanlabs.punishment.Punishment
+main: dev.titanlabs.punishment.PunishmentPlugin
 api-version: '1.13'
 authors: [Zak Shearman, Hyfe]
 website: www.titanlabs.dev

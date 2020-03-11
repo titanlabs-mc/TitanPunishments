@@ -1,14 +1,14 @@
 package dev.titanlabs.punishment.commands.titanpunish;
 
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import me.hyfe.simplespigot.command.command.SimpleCommand;
 import me.hyfe.simplespigot.text.Text;
 import org.bukkit.command.CommandSender;
 
 public class TitanPunishCommand extends SimpleCommand<CommandSender> {
-    private final Punishment plugin;
+    private final PunishmentPlugin plugin;
 
-    public TitanPunishCommand(Punishment plugin, String command, String permission, boolean isConsole) {
+    public TitanPunishCommand(PunishmentPlugin plugin, String command, String permission, boolean isConsole) {
         super(plugin, command, permission, isConsole);
         this.plugin = plugin;
     }

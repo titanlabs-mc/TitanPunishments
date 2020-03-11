@@ -1,6 +1,6 @@
 package dev.titanlabs.punishment.cache.listener;
 
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.objects.user.IpAddress;
@@ -18,7 +18,7 @@ public class ConnectionListener implements Listener {
     private final UserCache userCache;
     private final IpCache ipCache;
 
-    public ConnectionListener(Punishment plugin) {
+    public ConnectionListener(PunishmentPlugin plugin) {
         this.userCache = plugin.getUserCache();
         this.ipCache = plugin.getIpCache();
     }
