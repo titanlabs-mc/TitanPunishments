@@ -47,10 +47,10 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
 
             String finalReason = reason;
             if (silent) {
-                Text.sendMessage(sender, this.lang.get("silent-prefix").string()
+                Text.sendMessage(sender, this.lang.get("silent-prefix").sendableString()
                         .concat(this.lang.get(preBanned ? "banned-player-permanent-overwrite-reason" : "banned-player-permanent-reason", replacer -> replacer
                                 .set("player", target.getPlayer().getName())
-                                .set("reason", finalReason)).string()));
+                                .set("reason", finalReason)).sendableString()));
                 return;
             }
             this.lang.get(preBanned ? "banned-player-permanent-overwrite-reason" : "banned-player-permanent-reason", replacer -> replacer

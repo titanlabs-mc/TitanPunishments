@@ -11,3 +11,7 @@ commands:
     aliases:
       - titanpunishments
       - punishments
+  ban:
+    description: Ban command
+    aliases:
+      - banish

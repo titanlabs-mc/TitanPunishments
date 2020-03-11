@@ -21,6 +21,10 @@ second: 'second'
 
 silent-prefix: '&8[&cSilent&8] '
 
+# Usage
+
+ban-command-usage: '&c/ban <player> [reason] [-s]'
+
 # Bans
 # Placeholders Available (depends on command): %player%, %length%, %reason%
 ban-failed-overwrite: '&cThat player is already banned and you are unable to overwrite bans.'

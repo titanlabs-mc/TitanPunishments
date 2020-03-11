@@ -23,6 +23,10 @@ public final class Punishment extends SpigotPlugin {
 
     @Override
     public void onEnable() {
+        if (!this.getDataFolder().toPath().resolve("data").toFile().exists()) {
+            this.getDataFolder().toPath().resolve("data").toFile().mkdirs();
+        }
+
         this.registerConfigs();
 
         this.userStorage = new UserStorage(this);

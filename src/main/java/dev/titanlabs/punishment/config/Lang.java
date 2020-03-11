@@ -9,11 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 public class Lang {
     private final Punishment plugin;
-    private Map<String, String> langContent = Maps.newHashMap();
+    private Map<String, Object> langContent = Maps.newHashMap();
 
     public Lang(Punishment plugin) {
         this.plugin = plugin;
@@ -23,6 +24,8 @@ public class Lang {
     public void load() {
         Config config = this.plugin.getConfig("lang");
         for (String key : config.keys("", false)) {
+
+            System.out.println("PUTTING: ".concat(key));
             this.langContent.put(key, config.get(key));
         }
     }
@@ -32,8 +35,9 @@ public class Lang {
     }
 
     public SubLang get(String id, Replace replace) {
-        String requested = this.langContent.get(id);
-        if (replace == null) {
+        Object requested = this.langContent.get(id);
+
+        if (requested == null) {
             System.out.println("^^^^^^^^^^ -[TitanPunishment]- ^^^^^^^^^^");
             System.out.println(" ");
             System.out.println("Missing the configuration value '".concat(id).concat("', located in the file 'lang.yml'"));
@@ -41,30 +45,39 @@ public class Lang {
             System.out.println("^^^^^^^^^^ -[TitanPunishment]- ^^^^^^^^^^");
             return null;
         }
+
         return new SubLang(Text.modify(requested, replace));
     }
 
     public class SubLang {
-        private final String message;
+        private final List<String> message;
 
-        public SubLang(String message) {
+        public SubLang(List<String> message) {
             this.message = message;
         }
 
-        public String string() {
+        public List<String> string() {
             return this.message;
+        }
+
+        public String sendableString() {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String line : this.message) {
+                stringBuilder.append(line.concat("\n"));
+            }
+            return stringBuilder.toString();
         }
 
         public void to(String permission) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission(permission)) {
-                    Text.sendMessage(player, this.message);
+                    Text.sendMessage(player, this.sendableString());
                 }
             }
         }
 
         public void to(CommandSender sender) {
-            Text.sendMessage(sender, this.message);
+            Text.sendMessage(sender, this.sendableString());
         }
     }
 }

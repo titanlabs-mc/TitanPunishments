@@ -18,7 +18,6 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
         super(plugin, permission, isConsole);
         this.lang = plugin.getLang();
 
-        this.inheritPermission();
         this.addArgument(User.class, "player");
     }
 
