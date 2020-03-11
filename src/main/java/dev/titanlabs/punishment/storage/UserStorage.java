@@ -1,7 +1,7 @@
 package dev.titanlabs.punishment.storage;
 
 import com.eatthepath.uuid.FastUUID;
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.objects.punishments.Ban;
 import dev.titanlabs.punishment.objects.punishments.Kick;
 import dev.titanlabs.punishment.objects.punishments.Mute;
@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class UserStorage extends Storage<User> {
 
-    public UserStorage(Punishment plugin) {
+    public UserStorage(PunishmentPlugin plugin) {
         super(plugin, factory -> factory.create(plugin.getConfigStore().commons().get("storageMethod"), path -> path.resolve("data").resolve("users")));
     }
 

@@ -1,7 +1,7 @@
 package dev.titanlabs.punishment.config;
 
 import com.google.common.collect.Maps;
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import me.hyfe.simplespigot.config.Config;
 import me.hyfe.simplespigot.text.Replace;
 import me.hyfe.simplespigot.text.Text;
@@ -12,10 +12,10 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 
 public class Lang {
-    private final Punishment plugin;
+    private final PunishmentPlugin plugin;
     private Map<String, String> langContent = Maps.newHashMap();
 
-    public Lang(Punishment plugin) {
+    public Lang(PunishmentPlugin plugin) {
         this.plugin = plugin;
         this.load();
     }

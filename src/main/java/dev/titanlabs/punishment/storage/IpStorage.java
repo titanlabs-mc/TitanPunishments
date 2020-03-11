@@ -1,6 +1,6 @@
 package dev.titanlabs.punishment.storage;
 
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.objects.user.IpAddress;
 import me.hyfe.simplespigot.json.TypeTokens;
 import me.hyfe.simplespigot.storage.storage.Storage;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class IpStorage extends Storage<IpAddress> {
 
-    public IpStorage(Punishment plugin) {
+    public IpStorage(PunishmentPlugin plugin) {
         super(plugin, factory -> factory.create(plugin.getConfigStore().commons().get("storageMethod"), path -> path.resolve("data").resolve("ips")));
     }
 

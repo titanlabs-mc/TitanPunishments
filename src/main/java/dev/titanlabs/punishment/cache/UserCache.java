@@ -1,7 +1,7 @@
 package dev.titanlabs.punishment.cache;
 
 import com.eatthepath.uuid.FastUUID;
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.objects.user.User;
 import dev.titanlabs.punishment.storage.UserStorage;
 import me.hyfe.simplespigot.cache.FutureCache;
@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 public class UserCache extends FutureCache<UUID, User> {
     private final UserStorage userStorage;
 
-    public UserCache(Punishment plugin) {
+    public UserCache(PunishmentPlugin plugin) {
         super(plugin);
         this.userStorage = plugin.getUserStorage();
     }

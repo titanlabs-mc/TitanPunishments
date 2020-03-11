@@ -1,6 +1,6 @@
 package dev.titanlabs.punishment.commands.ban.subs;
 
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.objects.punishments.Ban;
 import dev.titanlabs.punishment.objects.user.User;
@@ -15,7 +15,7 @@ import java.util.UUID;
 public class BanPlayerReasonSub extends SubCommand<CommandSender> {
     private final Lang lang;
 
-    public BanPlayerReasonSub(Punishment plugin, String permission, boolean isConsole) {
+    public BanPlayerReasonSub(PunishmentPlugin plugin, String permission, boolean isConsole) {
         super(plugin, permission, isConsole);
         this.lang = plugin.getLang();
 

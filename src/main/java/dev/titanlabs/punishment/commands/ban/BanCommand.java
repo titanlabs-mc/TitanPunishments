@@ -1,6 +1,6 @@
 package dev.titanlabs.punishment.commands.ban;
 
-import dev.titanlabs.punishment.Punishment;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.commands.ban.subs.BanPlayerReasonSub;
 import dev.titanlabs.punishment.commands.ban.subs.BanPlayerSub;
 import me.hyfe.simplespigot.command.command.SimpleCommand;
@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 
 public class BanCommand extends SimpleCommand<CommandSender> {
 
-    public BanCommand(Punishment plugin, String command, String permission, boolean isConsole) {
+    public BanCommand(PunishmentPlugin plugin, String command, String permission, boolean isConsole) {
         super(plugin, command, permission, isConsole);
 
         this.setSubCommands(

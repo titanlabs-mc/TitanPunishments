@@ -14,7 +14,7 @@ import me.hyfe.simplespigot.plugin.SpigotPlugin;
 
 import java.nio.file.Path;
 
-public final class Punishment extends SpigotPlugin {
+public final class PunishmentPlugin extends SpigotPlugin {
     private Lang lang;
     private UserStorage userStorage;
     private IpStorage ipStorage;
@@ -78,6 +78,6 @@ public final class Punishment extends SpigotPlugin {
                 .config("settings", Path::resolve, true)
                 .config("lang", Path::resolve, true)
                 .common("storageMethod", "settings", config -> config.string("storage.storage-method"));
-        this.lang = new Lang(this);
+        // this.lang = new Lang(this); An array list is not a string
     }
 }
