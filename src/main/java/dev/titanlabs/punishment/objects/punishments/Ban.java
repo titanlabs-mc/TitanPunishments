@@ -36,6 +36,16 @@ public class Ban {
         this.expiryTime = this.banTime + length;
     }
 
+    public Ban(UUID executor, UUID subject, String reason, boolean temporary, long banTime, long length) {
+        this.executor = executor;
+        this.subject = subject;
+        this.reason = reason;
+        this.length = length;
+        this.temporary = temporary;
+        this.banTime = banTime;
+        this.expiryTime = this.banTime + length;
+    }
+
     public UUID getExecutor() {
         return this.executor;
     }
@@ -65,6 +75,9 @@ public class Ban {
     }
 
     public boolean isExpired() {
+        if (!this.temporary) {
+            return false;
+        }
         return System.currentTimeMillis() > this.expiryTime;
     }
 }

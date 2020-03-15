@@ -16,7 +16,7 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
     private final Lang lang;
 
     public BanPlayerReasonSub(PunishmentPlugin plugin, String permission, boolean isConsole) {
-        super(plugin, permission, isConsole);
+        super(plugin, permission, isConsole, true);
         this.lang = plugin.getLang();
 
         this.addArgument(User.class, "player");
@@ -34,18 +34,15 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
                 return;
             }
 
-            boolean silent = false;
-            String reason = this.parseArgument(strings, 1);
-            if (reason.substring(reason.length() - 2).equalsIgnoreCase("-s")) {
-                reason = reason.substring(0, reason.length() - 2);
-                silent = true;
-            }
+
+            String reason = String.join(" ", this.getEnd(strings));
+            boolean silent = reason.endsWith("-s");
 
             UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : UUID.fromString("CONSOLE");
             UUID subjectUniqueId = target.getUuid();
             target.ban(new Ban(executorUniqueId, subjectUniqueId, reason));
 
-            String finalReason = reason;
+            String finalReason = silent ? reason.substring(0, reason.length() - 2) : reason;
             if (silent) {
                 Text.sendMessage(sender, this.lang.get("silent-prefix").compatibleString()
                         .concat(this.lang.get(preBanned ? "banned-player-permanent-overwrite-reason" : "banned-player-permanent-reason", replacer -> replacer

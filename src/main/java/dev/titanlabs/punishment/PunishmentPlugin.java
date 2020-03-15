@@ -34,6 +34,10 @@ public final class PunishmentPlugin extends SpigotPlugin {
         this.ipCache = new IpCache(this);
         this.userCache = new UserCache(this);
 
+        this.registerRegistries(
+                new ArgumentRegistry(this)
+        );
+
         this.registerCommands(
                 new BanCommand(this, "ban", "titanpunish.ban", true),
                 new TitanPunishCommand(this, "titanpunish", "", true)
@@ -41,10 +45,6 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
         this.registerListeners(
                 new ConnectionListener(this)
-        );
-
-        this.registerRegistries(
-                new ArgumentRegistry(this)
         );
     }
 
