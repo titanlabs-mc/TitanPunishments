@@ -3,14 +3,18 @@ package dev.titanlabs.punishment.storage;
 import com.eatthepath.uuid.FastUUID;
 import com.google.common.collect.Sets;
 import dev.titanlabs.punishment.PunishmentPlugin;
+import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.objects.punishments.Ban;
 import dev.titanlabs.punishment.objects.punishments.Kick;
 import dev.titanlabs.punishment.objects.punishments.Mute;
 import dev.titanlabs.punishment.objects.punishments.Warning;
-import dev.titanlabs.punishment.objects.user.IpAddress;
 import dev.titanlabs.punishment.objects.user.User;
 import dev.titanlabs.punishment.storage.adapters.BanAdapter;
+import dev.titanlabs.punishment.storage.adapters.KickAdapter;
+import dev.titanlabs.punishment.storage.adapters.MuteAdapter;
+import dev.titanlabs.punishment.storage.adapters.WarningAdapter;
 import me.hyfe.simplespigot.json.Token;
+import me.hyfe.simplespigot.json.TypeTokens;
 import me.hyfe.simplespigot.storage.storage.Storage;
 import me.hyfe.simplespigot.storage.storage.load.Deserializer;
 import me.hyfe.simplespigot.storage.storage.load.Serializer;
@@ -19,11 +23,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class UserStorage extends Storage<User> {
+    private final IpCache ipCache;
 
     public UserStorage(PunishmentPlugin plugin) {
         super(plugin, factory -> factory.create(plugin.getConfigStore().commons().get("storageMethod"), path -> path.resolve("data").resolve("users")));
+        this.ipCache = plugin.getIpCache();
 
         this.addAdapter(Ban.class, new BanAdapter());
+        this.addAdapter(Kick.class, new KickAdapter());
+        this.addAdapter(Mute.class, new MuteAdapter());
+        this.addAdapter(Warning.class, new WarningAdapter());
         this.saveChanges();
     }
 
@@ -54,9 +63,9 @@ public class UserStorage extends Storage<User> {
             List<Warning> warnings = gson.fromJson(json.get("warnings").getAsString(), new Token<List<Warning>>().type());
             List<Warning> lastKnownActiveWarnings = gson.fromJson(json.get("lastKnownActiveWarnings").getAsString(), new Token<List<Warning>>().type());
             List<Kick> kicks = gson.fromJson(json.get("kicks").getAsString(), new Token<List<Kick>>().type());
-            List<IpAddress> ipAddresses = gson.fromJson(json.get("ipAddresses").getAsString(), new Token<List<IpAddress>>().type());
+            List<String> ipAddresses = gson.fromJson(json.get("ipAddresses").getAsString(), TypeTokens.findType());
             return new User(uuid, Sets.newHashSet(bans), lastKnownActiveBan, Sets.newHashSet(mutes), lastKnownActiveMute,
-                    Sets.newHashSet(warnings), Sets.newHashSet(lastKnownActiveWarnings), Sets.newHashSet(kicks), Sets.newHashSet(ipAddresses));
+                    Sets.newHashSet(warnings), Sets.newHashSet(lastKnownActiveWarnings), Sets.newHashSet(kicks), Sets.newHashSet(this.ipCache.loadIps(ipAddresses)));
         };
     }
 }

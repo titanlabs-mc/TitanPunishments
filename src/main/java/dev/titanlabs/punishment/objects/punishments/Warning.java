@@ -21,9 +21,17 @@ public class Warning {
         this.executor = executor;
         this.subject = subject;
         this.reason = reason;
-
         this.length = length;
         this.warningTime = System.currentTimeMillis();
+        this.expiryTime = this.warningTime + length;
+    }
+
+    public Warning(UUID executor, UUID subject, String reason, long length, long warningTime) {
+        this.executor = executor;
+        this.subject = subject;
+        this.reason = reason;
+        this.length = length;
+        this.warningTime = warningTime;
         this.expiryTime = this.warningTime + length;
     }
 

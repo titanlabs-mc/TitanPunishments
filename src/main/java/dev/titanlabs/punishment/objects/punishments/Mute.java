@@ -29,6 +29,16 @@ public class Mute {
         this.expiryTime = this.muteTime + length;
     }
 
+    public Mute(UUID executor, UUID subject, String reason, boolean temporary, long muteTime, long length) {
+        this.executor = executor;
+        this.subject = subject;
+        this.reason = reason;
+        this.length = length;
+        this.temporary = temporary;
+        this.muteTime = muteTime;
+        this.expiryTime = this.muteTime + length;
+    }
+
     public UUID getExecutor() {
         return this.executor;
     }

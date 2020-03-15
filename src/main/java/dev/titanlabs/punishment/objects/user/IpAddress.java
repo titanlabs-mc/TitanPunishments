@@ -10,6 +10,10 @@ public class IpAddress {
     private Set<UUID> onlineUniqueIds = Sets.newHashSet();
     private Set<UUID> uniqueIds = Sets.newHashSet();
 
+    public IpAddress(String address) {
+        this.address = address;
+    }
+
     public IpAddress(String address, UUID uuid) {
         this.address = address;
         this.uniqueIds.add(uuid);

@@ -30,6 +30,7 @@ public class ConnectionListener implements Listener {
         CompletableFuture<User> completableUser = this.userCache.load(player.getUniqueId());
         CompletableFuture<IpAddress> completableIpAddress = this.ipCache.get(player);
         completableUser.thenAccept(user -> completableIpAddress.thenAccept(user::setIpAddress));
+        completableIpAddress.thenAccept(ipAddress -> ipAddress.registerOnline(player.getUniqueId()));
     }
 
     @EventHandler

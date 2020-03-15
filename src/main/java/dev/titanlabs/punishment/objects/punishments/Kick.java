@@ -5,20 +5,27 @@ import java.util.UUID;
 public class Kick {
     private final UUID executor;
     private final UUID subject;
-    private final long warningTime;
+    private final long kickTime;
     private String reason;
 
     public Kick(UUID executor, UUID subject) {
         this.executor = executor;
         this.subject = subject;
-        this.warningTime = System.currentTimeMillis();
+        this.kickTime = System.currentTimeMillis();
     }
 
     public Kick(UUID executor, UUID subject, String reason) {
         this.executor = executor;
         this.subject = subject;
         this.reason = reason;
-        this.warningTime = System.currentTimeMillis();
+        this.kickTime = System.currentTimeMillis();
+    }
+
+    public Kick(UUID executor, UUID subject, String reason, long kickTime) {
+        this.executor = executor;
+        this.subject = subject;
+        this.reason = reason;
+        this.kickTime = kickTime;
     }
 
     public UUID getExecutor() {
@@ -29,8 +36,8 @@ public class Kick {
         return this.subject;
     }
 
-    public long getWarningTime() {
-        return this.warningTime;
+    public long getKickTime() {
+        return this.kickTime;
     }
 
     public String getReason() {
