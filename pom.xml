@@ -8,6 +8,7 @@
     <artifactId>punishment</artifactId>
     <version>1.0-ALPHA</version>
     <packaging>jar</packaging>
+    <description>A free, efficient, simple and feature-rich punishment plugin.</description>
 
     <name>TitanPunishment</name>
 

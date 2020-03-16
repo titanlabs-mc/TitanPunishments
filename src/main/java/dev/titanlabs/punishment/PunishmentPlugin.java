@@ -5,7 +5,10 @@ import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.cache.listener.ConnectionListener;
 import dev.titanlabs.punishment.commands.ban.BanCommand;
 import dev.titanlabs.punishment.commands.titanpunish.TitanPunishCommand;
+import dev.titanlabs.punishment.commands.unbancommand.UnBanCommand;
 import dev.titanlabs.punishment.config.Lang;
+import dev.titanlabs.punishment.listeners.ChatListener;
+import dev.titanlabs.punishment.listeners.JoinListener;
 import dev.titanlabs.punishment.registry.ArgumentRegistry;
 import dev.titanlabs.punishment.storage.IpStorage;
 import dev.titanlabs.punishment.storage.UserStorage;
@@ -29,9 +32,9 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
         this.registerConfigs();
 
-        this.userStorage = new UserStorage(this);
         this.ipStorage = new IpStorage(this);
         this.ipCache = new IpCache(this);
+        this.userStorage = new UserStorage(this);
         this.userCache = new UserCache(this);
 
         this.registerRegistries(
@@ -40,11 +43,14 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
         this.registerCommands(
                 new BanCommand(this, "ban", "titanpunish.ban", true),
+                new UnBanCommand(this, "unban", "titanpunish.unban", true),
                 new TitanPunishCommand(this, "titanpunish", "", true)
         );
 
         this.registerListeners(
-                new ConnectionListener(this)
+                new ConnectionListener(this),
+                new ChatListener(this),
+                new JoinListener(this)
         );
     }
 

@@ -39,6 +39,12 @@ banned-player-temporary-reason: '&cYou have temporarily banned &4%player% &cfor 
 banned-player-temporary-overwrite: '&cYou have overwritten &4%player%&c''s previous ban and temporarily banned them for %length%.'
 banned-player-temporary-overwrite-reason: '&cYou have overwritten &4%player%&c''s previous ban and temporarily banned them for %length% with the reason %reason%.'
 
+# Unban
+
+unban-command-usage: '&c/unban <player>'
+target-not-banned: '&cThat player is not banned.'
+unbanned-message: '&cYou have successfully unbanned %player%.'
+
 # Available placeholders for the below 2 messages: %player%, %time%, %reason%, %executor%
 ban-kick-message-permanent:
   - "&cYou have been permanently banned from www.titanlabs.dev"

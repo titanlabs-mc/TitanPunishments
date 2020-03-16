@@ -4,8 +4,10 @@ import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.objects.punishments.Ban;
 import dev.titanlabs.punishment.objects.user.User;
+import dev.titanlabs.punishment.service.punishment.PunishmentUtils;
 import me.hyfe.simplespigot.command.command.SubCommand;
 import me.hyfe.simplespigot.text.Text;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -34,15 +36,18 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
                 return;
             }
 
-
             String reason = String.join(" ", this.getEnd(strings));
-            boolean silent = reason.endsWith("-s");
+            for (String end : this.getEnd(strings)) {
+                Bukkit.broadcastMessage(end);
+            }
+            boolean silent = PunishmentUtils.silent(reason);
+            String finalReason = silent ? PunishmentUtils.fixSilent(reason) : reason;
 
             UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : UUID.fromString("CONSOLE");
             UUID subjectUniqueId = target.getUuid();
             target.ban(new Ban(executorUniqueId, subjectUniqueId, reason));
 
-            String finalReason = silent ? reason.substring(0, reason.length() - 2) : reason;
+
             if (silent) {
                 Text.sendMessage(sender, this.lang.get("silent-prefix").compatibleString()
                         .concat(this.lang.get(preBanned ? "banned-player-permanent-overwrite-reason" : "banned-player-permanent-reason", replacer -> replacer
@@ -53,6 +58,7 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
             this.lang.get(preBanned ? "banned-player-permanent-overwrite-reason" : "banned-player-permanent-reason", replacer -> replacer
                     .set("player", target.getPlayer().getName())
                     .set("reason", finalReason)).to(sender);
+            return;
         }
         this.lang.get("could-not-find-user").to(sender);
     }

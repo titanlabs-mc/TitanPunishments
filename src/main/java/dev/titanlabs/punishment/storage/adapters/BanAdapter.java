@@ -2,6 +2,7 @@ package dev.titanlabs.punishment.storage.adapters;
 
 import com.eatthepath.uuid.FastUUID;
 import com.google.gson.*;
+import dev.titanlabs.punishment.PunishmentEndReason;
 import dev.titanlabs.punishment.objects.punishments.Ban;
 import me.hyfe.simplespigot.storage.adapter.Adapter;
 
@@ -19,8 +20,9 @@ public class BanAdapter implements Adapter<Ban> {
         boolean temporary = jsonObject.get("temporary").getAsBoolean();
         String reason = jsonObject.get("reason").getAsString();
         long length = jsonObject.get("length").getAsLong();
+        PunishmentEndReason endReason = PunishmentEndReason.valueOf(jsonObject.get("punishmentEndReason").getAsString());
 
-        return new Ban(executor, subject, reason, temporary, banTime, length);
+        return new Ban(executor, subject, reason, temporary, banTime, length, endReason);
     }
 
     @Override
@@ -32,6 +34,7 @@ public class BanAdapter implements Adapter<Ban> {
         jsonObject.addProperty("temporary", ban.isTemporary());
         jsonObject.addProperty("reason", ban.getReason());
         jsonObject.addProperty("length", ban.getLength());
+        jsonObject.addProperty("punishmentEndReason", ban.getEndReason().toString());
         return jsonObject;
     }
 }

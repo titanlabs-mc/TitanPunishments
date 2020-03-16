@@ -1,6 +1,7 @@
 package dev.titanlabs.punishment.objects.user;
 
 import com.google.common.collect.Sets;
+import dev.titanlabs.punishment.PunishmentEndReason;
 import dev.titanlabs.punishment.objects.punishments.Ban;
 import dev.titanlabs.punishment.objects.punishments.Kick;
 import dev.titanlabs.punishment.objects.punishments.Mute;
@@ -61,6 +62,11 @@ public class User {
     public void ban(Ban ban) {
         this.activeBan = ban;
         this.bans.add(ban);
+    }
+
+    public void unban(PunishmentEndReason punishmentEndReason) {
+        this.activeBan.end(punishmentEndReason);
+        this.activeBan = null;
     }
 
     public boolean isBanned() {

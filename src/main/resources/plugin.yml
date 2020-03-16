@@ -1,5 +1,6 @@
-name: TitanPunishment
+name: TitanPunishments
 version: ${project.version}
+description: ${project.description}
 main: dev.titanlabs.punishment.PunishmentPlugin
 api-version: '1.13'
 authors: [Zak Shearman, Hyfe]
@@ -12,6 +13,10 @@ commands:
       - titanpunishments
       - punishments
   ban:
-    description: Ban command
+    description: Ban a player
     aliases:
       - banish
+  unban:
+    description: Unban a player
+    aliases:
+      - pardon

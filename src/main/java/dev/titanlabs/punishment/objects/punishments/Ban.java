@@ -1,5 +1,7 @@
 package dev.titanlabs.punishment.objects.punishments;
 
+import dev.titanlabs.punishment.PunishmentEndReason;
+
 import java.util.UUID;
 
 public class Ban {
@@ -10,6 +12,7 @@ public class Ban {
     private String reason;
     private long expiryTime;
     private long length;
+    private PunishmentEndReason endReason;
 
     public Ban(UUID executor, UUID subject) {
         this.executor = executor;
@@ -36,13 +39,14 @@ public class Ban {
         this.expiryTime = this.banTime + length;
     }
 
-    public Ban(UUID executor, UUID subject, String reason, boolean temporary, long banTime, long length) {
+    public Ban(UUID executor, UUID subject, String reason, boolean temporary, long banTime, long length, PunishmentEndReason endReason) {
         this.executor = executor;
         this.subject = subject;
         this.reason = reason;
         this.length = length;
         this.temporary = temporary;
         this.banTime = banTime;
+        this.endReason = endReason;
         this.expiryTime = this.banTime + length;
     }
 
@@ -79,5 +83,14 @@ public class Ban {
             return false;
         }
         return System.currentTimeMillis() > this.expiryTime;
+    }
+
+    public PunishmentEndReason getEndReason() {
+        return this.endReason;
+    }
+
+    public void end(PunishmentEndReason punishmentEndReason) {
+        this.endReason = punishmentEndReason;
+        this.expiryTime = System.currentTimeMillis();
     }
 }
