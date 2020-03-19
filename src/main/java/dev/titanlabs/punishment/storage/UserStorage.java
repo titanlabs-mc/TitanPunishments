@@ -39,9 +39,11 @@ public class UserStorage extends Storage<User> {
     @Override
     public Serializer<User> serializer() {
         return (user, json, gson) -> {
+            System.out.println("FUCK THIS");
             json.addProperty("uuid", FastUUID.toString(user.getUuid()));
             json.addProperty("bans", gson.toJson(user.getBans()));
             json.addProperty("lastKnownActiveBan", gson.toJson(user.getActiveBan()));
+            System.out.println(user.getActiveBan());
             json.addProperty("mutes", gson.toJson(user.getMutes()));
             json.addProperty("lastKnownActiveMute", gson.toJson(user.getActiveMute()));
             json.addProperty("warnings", gson.toJson(user.getWarnings()));

@@ -62,6 +62,8 @@ public class User {
     public void ban(Ban ban) {
         this.activeBan = ban;
         this.bans.add(ban);
+
+        Bukkit.broadcastMessage(this.activeBan.toString());
     }
 
     public void unban(PunishmentEndReason punishmentEndReason) {

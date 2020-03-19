@@ -7,7 +7,6 @@ import dev.titanlabs.punishment.objects.user.IpAddress;
 import dev.titanlabs.punishment.objects.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -23,7 +22,7 @@ public class ConnectionListener implements Listener {
         this.ipCache = plugin.getIpCache();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 

@@ -8,9 +8,10 @@ import dev.titanlabs.punishment.commands.titanpunish.TitanPunishCommand;
 import dev.titanlabs.punishment.commands.unbancommand.UnBanCommand;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.listeners.ChatListener;
-import dev.titanlabs.punishment.listeners.JoinListener;
+import dev.titanlabs.punishment.listeners.PlayerPreLoginListener;
 import dev.titanlabs.punishment.registry.ArgumentRegistry;
 import dev.titanlabs.punishment.storage.IpStorage;
+import dev.titanlabs.punishment.storage.StrippedUserStorage;
 import dev.titanlabs.punishment.storage.UserStorage;
 import me.hyfe.simplespigot.config.Config;
 import me.hyfe.simplespigot.plugin.SpigotPlugin;
@@ -19,6 +20,7 @@ import java.nio.file.Path;
 
 public final class PunishmentPlugin extends SpigotPlugin {
     private Lang lang;
+    private StrippedUserStorage strippedUserStorage;
     private UserStorage userStorage;
     private IpStorage ipStorage;
     private UserCache userCache;
@@ -32,6 +34,7 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
         this.registerConfigs();
 
+        this.strippedUserStorage = new StrippedUserStorage(this);
         this.ipStorage = new IpStorage(this);
         this.ipCache = new IpCache(this);
         this.userStorage = new UserStorage(this);
@@ -49,8 +52,8 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
         this.registerListeners(
                 new ConnectionListener(this),
-                new ChatListener(this),
-                new JoinListener(this)
+                new PlayerPreLoginListener(this),
+                new ChatListener(this)
         );
     }
 
@@ -61,6 +64,10 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
     public Lang getLang() {
         return this.lang;
+    }
+
+    public StrippedUserStorage getStrippedUserStorage() {
+        return this.strippedUserStorage;
     }
 
     public UserStorage getUserStorage() {
