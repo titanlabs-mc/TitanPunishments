@@ -34,7 +34,7 @@ public class BanAdapter implements Adapter<Ban> {
         jsonObject.addProperty("temporary", ban.isTemporary());
         jsonObject.addProperty("reason", ban.getReason());
         jsonObject.addProperty("length", ban.getLength());
-        jsonObject.addProperty("punishmentEndReason", ban.getEndReason().toString());
+        jsonObject.addProperty("punishmentEndReason", String.valueOf(ban.getEndReason()));
         return jsonObject;
     }
 }

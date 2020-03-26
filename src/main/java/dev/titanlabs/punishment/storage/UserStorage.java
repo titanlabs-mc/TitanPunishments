@@ -1,6 +1,7 @@
 package dev.titanlabs.punishment.storage;
 
 import com.eatthepath.uuid.FastUUID;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.cache.IpCache;
@@ -39,11 +40,14 @@ public class UserStorage extends Storage<User> {
     @Override
     public Serializer<User> serializer() {
         return (user, json, gson) -> {
-            System.out.println("FUCK THIS");
+            System.out.println("1");
             json.addProperty("uuid", FastUUID.toString(user.getUuid()));
-            json.addProperty("bans", gson.toJson(user.getBans()));
+            System.out.println("2");
+            json.addProperty("bans", gson.toJson(Lists.newArrayList(user.getBans())));
+            System.out.println("3");
+            System.out.println("active ban 1 ".concat(String.valueOf(user.getActiveBan())));
             json.addProperty("lastKnownActiveBan", gson.toJson(user.getActiveBan()));
-            System.out.println(user.getActiveBan());
+            System.out.println("active ban 2 ".concat(String.valueOf(user.getActiveBan())));
             json.addProperty("mutes", gson.toJson(user.getMutes()));
             json.addProperty("lastKnownActiveMute", gson.toJson(user.getActiveMute()));
             json.addProperty("warnings", gson.toJson(user.getWarnings()));

@@ -8,7 +8,7 @@ import dev.titanlabs.punishment.objects.user.User;
 import me.hyfe.simplespigot.command.CommandBase;
 import me.hyfe.simplespigot.registry.Registry;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 import java.util.Optional;
 
@@ -26,8 +26,11 @@ public class ArgumentRegistry implements Registry {
     @Override
     public void register() {
         this.commandBase.registerArgumentType(User.class, input -> {
-            Player player = Bukkit.getPlayerExact(input);
-            return player == null ? Optional.empty() : this.userCache.getSync(player.getUniqueId());
+            OfflinePlayer player = Bukkit.getOfflinePlayer(input);
+            System.out.println(this.userCache.getSync(player.getUniqueId()));
+            System.out.println(player.getName());
+            System.out.println(player.hasPlayedBefore());
+            return !player.hasPlayedBefore() ? Optional.empty() : this.userCache.getSync(player.getUniqueId());
         }).registerArgumentType(IpAddress.class, this.ipCache::getSync);
     }
 }
