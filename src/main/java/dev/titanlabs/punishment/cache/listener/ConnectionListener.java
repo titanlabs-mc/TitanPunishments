@@ -45,5 +45,6 @@ public class ConnectionListener implements Listener {
                     this.ipCache.unload(ipAddress);
                 }
             }
-        });}
+        });
+    }
 }

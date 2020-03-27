@@ -40,20 +40,15 @@ public class UserStorage extends Storage<User> {
     @Override
     public Serializer<User> serializer() {
         return (user, json, gson) -> {
-            System.out.println("1");
             json.addProperty("uuid", FastUUID.toString(user.getUuid()));
-            System.out.println("2");
             json.addProperty("bans", gson.toJson(Lists.newArrayList(user.getBans())));
-            System.out.println("3");
-            System.out.println("active ban 1 ".concat(String.valueOf(user.getActiveBan())));
             json.addProperty("lastKnownActiveBan", gson.toJson(user.getActiveBan()));
-            System.out.println("active ban 2 ".concat(String.valueOf(user.getActiveBan())));
-            json.addProperty("mutes", gson.toJson(user.getMutes()));
+            json.addProperty("mutes", gson.toJson(Lists.newArrayList(user.getMutes())));
             json.addProperty("lastKnownActiveMute", gson.toJson(user.getActiveMute()));
-            json.addProperty("warnings", gson.toJson(user.getWarnings()));
-            json.addProperty("lastKnownActiveWarnings", gson.toJson(user.getActiveWarnings()));
-            json.addProperty("kicks", gson.toJson(user.getKicks()));
-            json.addProperty("ipAddresses", gson.toJson(user.getIpAddresses()));
+            json.addProperty("warnings", gson.toJson(Lists.newArrayList(user.getWarnings())));
+            json.addProperty("lastKnownActiveWarnings", gson.toJson(Lists.newArrayList(user.getActiveWarnings())));
+            json.addProperty("kicks", gson.toJson(Lists.newArrayList(user.getKicks())));
+            json.addProperty("ipAddresses", gson.toJson(Lists.newArrayList(user.getIpAddresses())));
             return json;
         };
     }

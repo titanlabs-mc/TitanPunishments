@@ -43,7 +43,7 @@ public class UserCache extends FutureCache<UUID, User> {
     public CompletableFuture<User> getWithoutLoad(UUID uuid) {
         return this.get(uuid).thenApply(optionalUser -> {
             if (!optionalUser.isPresent()) {
-                User user =  this.storage.load(FastUUID.toString(uuid));
+                User user = this.storage.load(FastUUID.toString(uuid));
                 if (user == null) {
                     return this.set(uuid, new User(uuid));
                 } else {

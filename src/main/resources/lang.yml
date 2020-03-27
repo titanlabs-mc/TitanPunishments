@@ -1,5 +1,3 @@
-
-
 no-permission: '&cYou do not have permission to do this.'
 could-not-find-user: '&cCould not find that user.'
 
@@ -51,9 +49,25 @@ ban-kick-message-permanent:
   - ""
   - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
 
+ban-kick-message-permanent-reason:
+  - "&cYou have been permanently banned from www.titanlabs.dev"
+  - ""
+  - "&cReason: &4%reason%"
+  - ""
+  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+
 ban-kick-message-temporary:
   - "&cYou have been banned from www.titanlabs.dev"
   - ""
+  - "&cYour ban will expire in &4%length%"
+  - ""
+  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+  - ""
+
+ban-kick-message-temporary-reason:
+  - "&cYou have been banned from www.titanlabs.dev"
+  - ""
+  - "&cReason: &4%reason%"
   - "&cYour ban will expire in &4%length%"
   - ""
   - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"

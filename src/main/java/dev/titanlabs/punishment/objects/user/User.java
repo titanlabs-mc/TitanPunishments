@@ -113,12 +113,12 @@ public class User {
         this.kicks.add(kick);
     }
 
-    public void setIpAddress(IpAddress ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
     public IpAddress getIpAddress() {
         return this.ipAddress;
+    }
+
+    public void setIpAddress(IpAddress ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     public Set<IpAddress> getIpAddresses() {

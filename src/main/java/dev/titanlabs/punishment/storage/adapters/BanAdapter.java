@@ -18,7 +18,7 @@ public class BanAdapter implements Adapter<Ban> {
         UUID subject = FastUUID.parseUUID(jsonObject.get("subject").getAsString());
         long banTime = jsonObject.get("banTime").getAsLong();
         boolean temporary = jsonObject.get("temporary").getAsBoolean();
-        String reason = jsonObject.get("reason").getAsString();
+        String reason = jsonObject.get("reason") == null ? null : jsonObject.get("reason").getAsString();
         long length = jsonObject.get("length").getAsLong();
         PunishmentEndReason endReason = PunishmentEndReason.valueOf(jsonObject.get("punishmentEndReason").getAsString());
 

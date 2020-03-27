@@ -41,8 +41,9 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
             target.ban(new Ban(executorUniqueId, subjectUniqueId));
 
             this.lang.get(preBanned ? "banned-player-permanent-overwrite" : "banned-player-permanent", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
-
-            // Kick the player
+            if (player.isOnline()) {
+                ((Player) player).kickPlayer(this.lang.get("ban-kick-message-permanent").compatibleString());
+            }
         });
     }
 }
