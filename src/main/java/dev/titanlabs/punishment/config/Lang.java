@@ -26,7 +26,7 @@ public class Lang {
         Config config = this.plugin.getConfig("lang");
         for (String key : config.keys("", false)) {
             Object value = config.get(key);
-            this.langContent.put(key, value instanceof String ? Collections.singletonList(config.get(key)) : config.get(key));
+            this.langContent.put(key, value instanceof String ? Collections.singletonList(config.string(key)) : config.list(key));
         }
     }
 
