@@ -3,17 +3,11 @@ could-not-find-user: '&cCould not find that user.'
 
 # Time Text
 years: 'years'
-year: 'year'
 months: 'months'
-month: 'month'
 weeks: 'weeks'
-week: 'week'
 days: 'days'
-day: 'day'
 hours: 'hours'
-hour: 'hour'
 seconds: 'seconds'
-second: 'second'
 
 # General
 

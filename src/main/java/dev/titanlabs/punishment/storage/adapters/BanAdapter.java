@@ -20,8 +20,8 @@ public class BanAdapter implements Adapter<Ban> {
         boolean temporary = jsonObject.get("temporary").getAsBoolean();
         String reason = jsonObject.get("reason") == null ? null : jsonObject.get("reason").getAsString();
         long length = jsonObject.get("length").getAsLong();
-        PunishmentEndReason endReason = PunishmentEndReason.valueOf(jsonObject.get("punishmentEndReason").getAsString());
-
+        String stringEndReason = jsonObject.get("punishmentEndReason").getAsString();
+        PunishmentEndReason endReason = stringEndReason.equals("null") ? null :  PunishmentEndReason.valueOf(stringEndReason);
         return new Ban(executor, subject, reason, temporary, banTime, length, endReason);
     }
 

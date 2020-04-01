@@ -4,12 +4,14 @@ import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.cache.listener.ConnectionListener;
 import dev.titanlabs.punishment.commands.ban.BanCommand;
+import dev.titanlabs.punishment.commands.kick.KickCommand;
 import dev.titanlabs.punishment.commands.titanpunish.TitanPunishCommand;
 import dev.titanlabs.punishment.commands.unbancommand.UnBanCommand;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.listeners.ChatListener;
 import dev.titanlabs.punishment.listeners.PlayerPreLoginListener;
 import dev.titanlabs.punishment.registry.ArgumentRegistry;
+import dev.titanlabs.punishment.service.Time;
 import dev.titanlabs.punishment.storage.IpStorage;
 import dev.titanlabs.punishment.storage.StrippedUserStorage;
 import dev.titanlabs.punishment.storage.UserStorage;
@@ -47,6 +49,7 @@ public final class PunishmentPlugin extends SpigotPlugin {
         this.registerCommands(
                 new BanCommand(this, "ban", "titanpunish.ban", true),
                 new UnBanCommand(this, "unban", "titanpunish.unban", true),
+                new KickCommand(this, "kick","titanpunish.kick", true),
                 new TitanPunishCommand(this, "titanpunish", "", true)
         );
 
@@ -55,6 +58,7 @@ public final class PunishmentPlugin extends SpigotPlugin {
                 new PlayerPreLoginListener(this),
                 new ChatListener(this)
         );
+        new Time(this);
     }
 
     @Override

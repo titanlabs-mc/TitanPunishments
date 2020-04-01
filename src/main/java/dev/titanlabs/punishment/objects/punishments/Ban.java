@@ -3,6 +3,7 @@ package dev.titanlabs.punishment.objects.punishments;
 import dev.titanlabs.punishment.PunishmentEndReason;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class Ban {
     private final UUID executor;
@@ -92,5 +93,17 @@ public class Ban {
     public void end(PunishmentEndReason punishmentEndReason) {
         this.endReason = punishmentEndReason;
         this.expiryTime = System.currentTimeMillis();
+    }
+
+    public long getRemainingTime(TimeUnit unit) {
+        long remainingTimeMillis = this.banTime + this.length;
+        switch (unit) {
+            case SECONDS:
+                return remainingTimeMillis / 1000;
+            case MINUTES:
+                return (remainingTimeMillis / 1000) / 60;
+            default:
+                return remainingTimeMillis;
+        }
     }
 }

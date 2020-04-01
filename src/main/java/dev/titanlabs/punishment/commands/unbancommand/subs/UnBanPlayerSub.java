@@ -33,7 +33,7 @@ public class UnBanPlayerSub extends SubCommand<CommandSender> {
                 return;
             }
             target.unban(PunishmentEndReason.MANUAL);
-            this.lang.get("unbanned-message", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
+            this.lang.get("unbanned-message", replacer -> replacer.set("player", player.getName())).to(sender);
         });
     }
 }

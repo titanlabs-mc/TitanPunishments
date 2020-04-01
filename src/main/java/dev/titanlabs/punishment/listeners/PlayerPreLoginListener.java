@@ -5,9 +5,12 @@ import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.objects.user.StrippedUser;
 import dev.titanlabs.punishment.storage.StrippedUserStorage;
+import me.hyfe.simplespigot.service.General;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+
+import java.util.concurrent.TimeUnit;
 
 public class PlayerPreLoginListener implements Listener {
     private final StrippedUserStorage storage;
@@ -21,9 +24,8 @@ public class PlayerPreLoginListener implements Listener {
     @EventHandler
     public void beforeLogin(AsyncPlayerPreLoginEvent event) {
         StrippedUser user = this.storage.load(FastUUID.toString(event.getUniqueId()));
-        System.out.println("AAAA");
 
-        if (user.isBanned()) {
+        if (user != null && user.isBanned()) {
             StringBuilder configLocation = new StringBuilder("ban-kick-message");
             if (user.getBan().isTemporary()) {
                 configLocation.append("-temporary");
@@ -33,7 +35,9 @@ public class PlayerPreLoginListener implements Listener {
             if (user.getBan().getReason() != null) {
                 configLocation.append("-reason");
             }
-            event.setKickMessage(this.lang.get(configLocation.toString()).compatibleString());
+            event.setKickMessage(this.lang.get(configLocation.toString(), replacer -> replacer
+                    .set("reason", user.getBan().getReason())
+                    .set("length", General.formatSeconds(user.getBan().getRemainingTime(TimeUnit.SECONDS)))).compatibleString());
             event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_BANNED);
         }
     }

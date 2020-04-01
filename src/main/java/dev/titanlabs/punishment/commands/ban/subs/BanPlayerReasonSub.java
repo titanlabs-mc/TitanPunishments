@@ -7,7 +7,6 @@ import dev.titanlabs.punishment.objects.user.User;
 import dev.titanlabs.punishment.service.punishment.PunishmentUtils;
 import me.hyfe.simplespigot.command.command.SubCommand;
 import me.hyfe.simplespigot.text.Text;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -30,6 +29,7 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
         Optional<User> optionalTarget = this.parseArgument(strings, 0);
         if (optionalTarget.isPresent()) {
             User target = optionalTarget.get();
+            Player targetPlayer = target.getPlayer();
             boolean preBanned = target.isBanned();
             if (preBanned && !sender.hasPermission("titanpunish.ban.override")) {
                 this.lang.get("ban-failed-overwrite", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
@@ -37,16 +37,15 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
             }
 
             String reason = String.join(" ", this.getEnd(strings));
-            for (String end : this.getEnd(strings)) {
-                Bukkit.broadcastMessage(end);
-            }
             boolean silent = PunishmentUtils.silent(reason);
             String finalReason = silent ? PunishmentUtils.fixSilent(reason) : reason;
 
             UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : UUID.fromString("CONSOLE");
             UUID subjectUniqueId = target.getUuid();
             target.ban(new Ban(executorUniqueId, subjectUniqueId, reason));
-
+            if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
+                targetPlayer.getPlayer().kickPlayer(this.lang.get("ban-kick-message-permanent").compatibleString());
+            }
 
             if (silent) {
                 Text.sendMessage(sender, this.lang.get("silent-prefix").compatibleString()

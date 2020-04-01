@@ -25,8 +25,8 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
 
     @Override
     public void onExecute(CommandSender sender, String[] strings) {
-        OfflinePlayer player = this.parseArgument(strings, 0);
-        this.userCache.modifyUser(player.getUniqueId(), target -> {
+        OfflinePlayer targetPlayer = this.parseArgument(strings, 0);
+        this.userCache.modifyUser(targetPlayer.getUniqueId(), target -> {
             if (target == null) {
                 this.lang.get("could-not-find-user").to(sender);
                 return;
@@ -41,8 +41,8 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
             target.ban(new Ban(executorUniqueId, subjectUniqueId));
 
             this.lang.get(preBanned ? "banned-player-permanent-overwrite" : "banned-player-permanent", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
-            if (player.isOnline()) {
-                ((Player) player).kickPlayer(this.lang.get("ban-kick-message-permanent").compatibleString());
+            if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
+                targetPlayer.getPlayer().kickPlayer(this.lang.get("ban-kick-message-permanent").compatibleString());
             }
         });
     }

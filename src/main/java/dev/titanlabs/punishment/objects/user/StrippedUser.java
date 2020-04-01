@@ -14,8 +14,6 @@ public class StrippedUser {
     }
 
     public boolean isBanned() {
-        System.out.println(this.ban == null);
-        System.out.println(this.ban.isExpired());
         return this.ban != null && !this.ban.isExpired();
     }
 }
