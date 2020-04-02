@@ -5,6 +5,7 @@ import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.objects.punishments.Ban;
 import me.hyfe.simplespigot.command.command.SubCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,11 +13,13 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class BanPlayerSub extends SubCommand<CommandSender> {
+    private final PunishmentPlugin plugin;
     private final UserCache userCache;
     private final Lang lang;
 
     public BanPlayerSub(PunishmentPlugin plugin, String permission, boolean isConsole) {
         super(plugin, permission, isConsole);
+        this.plugin = plugin;
         this.userCache = plugin.getUserCache();
         this.lang = plugin.getLang();
 
@@ -36,14 +39,22 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
                 this.lang.get("ban-failed-overwrite", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
                 return;
             }
-            UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : UUID.fromString("CONSOLE");
-            UUID subjectUniqueId = target.getUuid();
-            target.ban(new Ban(executorUniqueId, subjectUniqueId));
-
-            this.lang.get(preBanned ? "banned-player-permanent-overwrite" : "banned-player-permanent", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
-            if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
-                targetPlayer.getPlayer().kickPlayer(this.lang.get("ban-kick-message-permanent").compatibleString());
+            Bukkit.getScheduler().runTask(this.plugin, () -> {
+                UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : null;
+                UUID subjectUniqueId = target.getUuid();
+                target.ban(new Ban(executorUniqueId, subjectUniqueId));
+                if (targetPlayer.getPlayer() == null) {
+                    return;
+                }
+                if (targetPlayer.isOnline()) {
+                    targetPlayer.getPlayer().kickPlayer(this.lang.get("ban.permanent.no-reason.kick-message").compatibleString());
+                }
+            });
+            if (preBanned) {
+                this.lang.get("ban.overwritten-message", replacer -> replacer.set("player", targetPlayer.getName())).to(sender);
             }
+            this.lang.get("ban.permanent.no-reason.executor-message", replacer -> replacer
+                    .set("player", targetPlayer.getName())).to(sender);
         });
     }
 }

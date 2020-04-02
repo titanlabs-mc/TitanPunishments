@@ -32,6 +32,10 @@ public class Kick {
         return this.executor;
     }
 
+    public boolean isConsoleExecutor() {
+        return this.executor == null;
+    }
+
     public UUID getSubject() {
         return this.subject;
     }

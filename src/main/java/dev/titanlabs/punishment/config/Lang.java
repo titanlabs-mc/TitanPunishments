@@ -15,19 +15,12 @@ import java.util.Map;
 
 public class Lang {
     private final PunishmentPlugin plugin;
+    private final Config config;
     private Map<String, List<String>> langContent = Maps.newHashMap();
 
     public Lang(PunishmentPlugin plugin) {
         this.plugin = plugin;
-        this.load();
-    }
-
-    public void load() {
-        Config config = this.plugin.getConfig("lang");
-        for (String key : config.keys("", false)) {
-            Object value = config.get(key);
-            this.langContent.put(key, value instanceof String ? Collections.singletonList(config.string(key)) : config.list(key));
-        }
+        this.config = plugin.getConfig("lang");
     }
 
     public SubLang get(String id) {
@@ -35,9 +28,15 @@ public class Lang {
     }
 
     public SubLang get(String id, Replace replace) {
-        List<String> requested = this.langContent.get(id);
+        Object requested = this.config.get(id);
+        List<String> value = null;
+        if (requested instanceof String) {
+            value = Collections.singletonList(this.config.string(id));
+        } else if (requested instanceof List) {
+            value = this.config.stringList(id);
+        }
 
-        if (requested == null || requested.isEmpty()) {
+        if (value == null || value.isEmpty()) {
             System.out.println("^^^^^^^^^^ -[TitanPunishment]- ^^^^^^^^^^");
             System.out.println(" ");
             System.out.println("Missing the configuration value '".concat(id).concat("', located in the file 'lang.yml'"));
@@ -45,7 +44,7 @@ public class Lang {
             System.out.println("^^^^^^^^^^ -[TitanPunishment]- ^^^^^^^^^^");
             return null;
         }
-        return new SubLang(Text.modify(requested, replace));
+        return new SubLang(Text.modify(value, replace));
     }
 
     public class SubLang {

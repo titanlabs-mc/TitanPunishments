@@ -13,58 +13,63 @@ seconds: 'seconds'
 
 silent-prefix: '&8[&cSilent&8] '
 
-# Usage
-
-ban-command-usage: '&c/ban <player> [reason] [-s]'
-
 # Bans
 # Placeholders Available (depends on command): %player%, %length%, %reason%
 ban-failed-overwrite: '&cThat player is already banned and you are unable to overwrite bans.'
 
-banned-player-permanent: '&cYou have banned &4%player%.'
-banned-player-permanent-overwrite: '&cYou have overwritten &4%player%&c''s previous ban.'
-banned-player-permanent-reason: '&cYou have banned &4%player% &cfor "%reason%".'
-banned-player-permanent-overwrite-reason: '&cYou have overwritten &4%player%&c''s previous ban and banned them for "%reason%".'
-
-banned-player-temporary: '&cYou have temporarily banned &4%player% &cfor %length%.'
-banned-player-temporary-reason: '&cYou have temporarily banned &4%player% &cfor %length% with the reason %reason%.'
-banned-player-temporary-overwrite: '&cYou have overwritten &4%player%&c''s previous ban and temporarily banned them for %length%.'
-banned-player-temporary-overwrite-reason: '&cYou have overwritten &4%player%&c''s previous ban and temporarily banned them for %length% with the reason %reason%.'
-
 # Unban
+unban:
+  usage: '&c/unban <player>'
+  not-banned: '&cThat player is not banned.'
+  executor-message: '&cYou have successfully unbanned %player%.'
 
-unban-command-usage: '&c/unban <player>'
-target-not-banned: '&cThat player is not banned.'
-unbanned-message: '&cYou have successfully unbanned %player%.'
+# Available placeholders for the below messages: %player%, %time%, %reason%, %executor%
+ban:
+  overwritten-message: '&8[&cWARNING&8] &cYou have overwritten %player%''s previous ban'
+  usage: '&c/ban <player> [reason] [-s]'
+  permanent:
+    reason:
+      executor-message: '&cYou have permanently banned %player% for %reason%.'
+      kick-message:
+        - "&cYou have been permanently banned from www.titanlabs.dev"
+        - ""
+        - "&cReason: &4%reason%"
+        - ""
+        - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+    no-reason:
+      executor-message: '&cYou have permanently banned %player%.'
+      kick-message:
+        - "&cYou have been permanently banned from www.titanlabs.dev"
+        - ""
+        - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+  temporary:
+    reason:
+      executor-message: '&cYou have temporarily banned %player% for %reason%.'
+      kick-message:
+        - "&cYou have been banned from www.titanlabs.dev"
+        - ""
+        - "&cReason: &4%reason%"
+        - "&cYour ban will expire in &4%length%"
+        - ""
+        - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+        - ""
+      no-reason:
+        executor-message: '&cYou have temporarily banned %player%.'
+        kick-message:
+          - "&cYou have been banned from www.titanlabs.dev"
+          - ""
+          - "&cYour ban will expire in &4%length%"
+          - ""
+          - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+          - ""
 
-# Available placeholders for the below 2 messages: %player%, %time%, %reason%, %executor%
-ban-kick-message-permanent:
-  - "&cYou have been permanently banned from www.titanlabs.dev"
-  - ""
-  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-
-ban-kick-message-permanent-reason:
-  - "&cYou have been permanently banned from www.titanlabs.dev"
-  - ""
-  - "&cReason: &4%reason%"
-  - ""
-  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-
-ban-kick-message-temporary:
-  - "&cYou have been banned from www.titanlabs.dev"
-  - ""
-  - "&cYour ban will expire in &4%length%"
-  - ""
-  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-  - ""
-
-ban-kick-message-temporary-reason:
-  - "&cYou have been banned from www.titanlabs.dev"
-  - ""
-  - "&cReason: &4%reason%"
-  - "&cYour ban will expire in &4%length%"
-  - ""
-  - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-  - ""
-
-
+kick:
+  usage: '&c/kick <player> [reason]'
+  reason:
+    executor-message: '&cYou have kicked %player% for %reason%.'
+    kick-message:
+      - "&cYou have been kicked for %reason%."
+  no-reason:
+    executor-message: '&cYou have kicked %player%.'
+    kick-message:
+      - "&cYou have been kicked."

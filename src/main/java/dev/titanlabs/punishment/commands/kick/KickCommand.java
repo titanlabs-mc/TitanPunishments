@@ -15,6 +15,6 @@ public class KickCommand extends SimpleCommand<CommandSender> {
 
     @Override
     public void onExecute(CommandSender sender, String[] strings) {
-        this.lang.get("kick-command-usage").to(sender);
+        this.lang.get("kick.usage").to(sender);
     }
 }

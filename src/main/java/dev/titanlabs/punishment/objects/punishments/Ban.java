@@ -55,6 +55,10 @@ public class Ban {
         return this.executor;
     }
 
+    public boolean isExecutorConsole() {
+        return this.executor == null;
+    }
+
     public UUID getSubject() {
         return this.subject;
     }

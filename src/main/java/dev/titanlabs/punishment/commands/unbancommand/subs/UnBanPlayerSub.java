@@ -29,11 +29,11 @@ public class UnBanPlayerSub extends SubCommand<CommandSender> {
                 return;
             }
             if (!target.isBanned()) {
-                this.lang.get("target-not-banned", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
+                this.lang.get("unban.not-banned", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
                 return;
             }
             target.unban(PunishmentEndReason.MANUAL);
-            this.lang.get("unbanned-message", replacer -> replacer.set("player", player.getName())).to(sender);
+            this.lang.get("unban.executor-message", replacer -> replacer.set("player", player.getName())).to(sender);
         });
     }
 }

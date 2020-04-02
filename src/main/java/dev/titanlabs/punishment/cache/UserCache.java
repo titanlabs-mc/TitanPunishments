@@ -6,6 +6,7 @@ import dev.titanlabs.punishment.objects.user.User;
 import dev.titanlabs.punishment.storage.UserStorage;
 import me.hyfe.simplespigot.cache.FutureCache;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -38,21 +39,6 @@ public class UserCache extends FutureCache<UUID, User> {
         });
     }
 
-
-    public CompletableFuture<User> getWithoutLoad(UUID uuid) {
-        return this.get(uuid).thenApply(optionalUser -> {
-            if (!optionalUser.isPresent()) {
-                User user = this.storage.load(FastUUID.toString(uuid));
-                if (user == null) {
-                    return this.set(uuid, new User(uuid));
-                } else {
-                    return this.set(uuid, user);
-                }
-            }
-            return optionalUser.get();
-        });
-    }
-
     public void unload(UUID uuid) {
         this.get(uuid).thenAccept(optionalUser -> {
             optionalUser.ifPresent(user -> this.storage.save(uuid.toString(), user));
@@ -61,7 +47,7 @@ public class UserCache extends FutureCache<UUID, User> {
     }
 
     public void modifyUser(UUID uuid, Consumer<User> consumer) {
-        this.get(uuid).thenAccept(optionalUser -> {
+        this.get(uuid).thenAcceptAsync(optionalUser -> {
             if (optionalUser.isPresent()) {
                 consumer.accept(optionalUser.get());
                 return;
@@ -70,6 +56,11 @@ public class UserCache extends FutureCache<UUID, User> {
             consumer.accept(user);
             this.storage.save(FastUUID.toString(uuid), user);
         });
+    }
+
+    public void modifyUserSync(UUID uuid, Consumer<User> consumer) {
+        Optional<User> user = this.getSync(uuid);
+
     }
 
     public void modifyUsers(Set<UUID> uuids, Consumer<User> consumer) {

@@ -20,6 +20,6 @@ public class UnBanCommand extends SimpleCommand<CommandSender> {
 
     @Override
     public void onExecute(CommandSender sender, String[] strings) {
-        this.lang.get("unban-command-usage").to(sender);
+        this.lang.get("unban.usage").to(sender);
     }
 }

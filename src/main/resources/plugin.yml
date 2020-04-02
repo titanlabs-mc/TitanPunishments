@@ -20,3 +20,5 @@ commands:
     description: Unban a player
     aliases:
       - pardon
+  kick:
+    description: Kick a player from the server
