@@ -16,6 +16,6 @@ public class TitanPunishCommand extends SimpleCommand<CommandSender> {
     @Override
     public void onExecute(CommandSender sender, String[] strings) {
         Text.sendMessage(sender, "&cRunning TitanPunish v".concat(this.plugin.getDescription().getVersion()).concat(" by Zak Shearman and Hyfe at TitanLabs.\n" +
-                "&chttps://titanlabs.dev/"));
+                "&cReceive help here: https://feedback.titanlabs.dev/"));
     }
 }

@@ -1,4 +1,4 @@
-package dev.titanlabs.punishment.commands.unbancommand.subs;
+package dev.titanlabs.punishment.commands.unban.subs;
 
 import dev.titanlabs.punishment.PunishmentEndReason;
 import dev.titanlabs.punishment.PunishmentPlugin;

@@ -1,12 +1,13 @@
 package dev.titanlabs.punishment;
 
+import dev.titanlabs.punishment.api.Api;
 import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.cache.listener.ConnectionListener;
 import dev.titanlabs.punishment.commands.ban.BanCommand;
 import dev.titanlabs.punishment.commands.kick.KickCommand;
 import dev.titanlabs.punishment.commands.titanpunish.TitanPunishCommand;
-import dev.titanlabs.punishment.commands.unbancommand.UnBanCommand;
+import dev.titanlabs.punishment.commands.unban.UnBanCommand;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.listeners.ChatListener;
 import dev.titanlabs.punishment.listeners.PlayerPreLoginListener;
@@ -28,12 +29,11 @@ public final class PunishmentPlugin extends SpigotPlugin {
     private UserCache userCache;
     private IpCache ipCache;
 
+    private Api localApi;
+    private static Api externalApi;
+
     @Override
     public void onEnable() {
-        if (!this.getDataFolder().toPath().resolve("data").toFile().exists()) {
-            this.getDataFolder().toPath().resolve("data").toFile().mkdirs();
-        }
-
         this.registerConfigs();
 
         this.strippedUserStorage = new StrippedUserStorage(this);
@@ -41,6 +41,9 @@ public final class PunishmentPlugin extends SpigotPlugin {
         this.ipCache = new IpCache(this);
         this.userStorage = new UserStorage(this);
         this.userCache = new UserCache(this);
+
+        this.localApi = new Api(this);
+        externalApi = this.localApi;
 
         this.registerRegistries(
                 new ArgumentRegistry(this)
@@ -100,5 +103,13 @@ public final class PunishmentPlugin extends SpigotPlugin {
                 .config("lang", Path::resolve, true)
                 .common("storageMethod", "settings", config -> config.string("storage.storage-method"));
         this.lang = new Lang(this);
+    }
+
+    public Api getLocalApi() {
+        return this.localApi;
+    }
+
+    public static Api getExternalApi() {
+        return externalApi;
     }
 }

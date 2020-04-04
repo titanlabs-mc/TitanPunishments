@@ -13,19 +13,17 @@ seconds: 'seconds'
 
 silent-prefix: '&8[&cSilent&8] '
 
-# Bans
-# Placeholders Available (depends on command): %player%, %length%, %reason%
-ban-failed-overwrite: '&cThat player is already banned and you are unable to overwrite bans.'
-
 # Unban
 unban:
   usage: '&c/unban <player>'
   not-banned: '&cThat player is not banned.'
   executor-message: '&cYou have successfully unbanned %player%.'
 
+# Ban messages.
 # Available placeholders for the below messages: %player%, %time%, %reason%, %executor%
 ban:
   overwritten-message: '&8[&cWARNING&8] &cYou have overwritten %player%''s previous ban'
+  overwrite-fail: '&cThat player is already banned and you are unable to overwrite bans.'
   usage: '&c/ban <player> [reason] [-s]'
   permanent:
     reason:

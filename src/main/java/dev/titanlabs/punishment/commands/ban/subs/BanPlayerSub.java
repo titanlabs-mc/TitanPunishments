@@ -1,5 +1,6 @@
 package dev.titanlabs.punishment.commands.ban.subs;
 
+import dev.titanlabs.punishment.PunishmentEndReason;
 import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.config.Lang;
@@ -35,9 +36,13 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
                 return;
             }
             boolean preBanned = target.isBanned();
-            if (preBanned && !sender.hasPermission("titanpunish.ban.override")) {
-                this.lang.get("ban-failed-overwrite", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
-                return;
+            if (preBanned) {
+                if (!sender.hasPermission("titanpunish.ban.override")) {
+                    this.lang.get("ban.overwrite-fail", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
+                    return;
+                }
+                target.getActiveBan().setEndReason(PunishmentEndReason.MANUAL);
+                this.lang.get("ban.overwritten-message", replacer -> replacer.set("player", targetPlayer.getName())).to(sender);
             }
             Bukkit.getScheduler().runTask(this.plugin, () -> {
                 UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : null;
@@ -50,9 +55,6 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
                     targetPlayer.getPlayer().kickPlayer(this.lang.get("ban.permanent.no-reason.kick-message").compatibleString());
                 }
             });
-            if (preBanned) {
-                this.lang.get("ban.overwritten-message", replacer -> replacer.set("player", targetPlayer.getName())).to(sender);
-            }
             this.lang.get("ban.permanent.no-reason.executor-message", replacer -> replacer
                     .set("player", targetPlayer.getName())).to(sender);
         });

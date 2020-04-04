@@ -1,5 +1,6 @@
 package dev.titanlabs.punishment.commands.ban.subs;
 
+import dev.titanlabs.punishment.PunishmentEndReason;
 import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.objects.punishments.Ban;
@@ -7,6 +8,7 @@ import dev.titanlabs.punishment.objects.user.User;
 import dev.titanlabs.punishment.service.punishment.PunishmentUtils;
 import me.hyfe.simplespigot.command.command.SubCommand;
 import me.hyfe.simplespigot.text.Text;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -21,7 +23,7 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
         this.lang = plugin.getLang();
 
         this.addArgument(User.class, "player");
-        this.addArgument(String.class, "reason");
+        this.addArgument(String.class, "reason-placer");
     }
 
     @Override
@@ -31,32 +33,37 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
             User target = optionalTarget.get();
             Player targetPlayer = target.getPlayer();
             boolean preBanned = target.isBanned();
-            if (preBanned && !sender.hasPermission("titanpunish.ban.override")) {
-                this.lang.get("ban-failed-overwrite", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
-                return;
+            if (preBanned) {
+                if (!sender.hasPermission("titanpunish.ban.override")) {
+                    this.lang.get("ban.overwrite-fail", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
+                    return;
+                }
+                target.getActiveBan().setEndReason(PunishmentEndReason.MANUAL);
             }
 
             String reason = String.join(" ", this.getEnd(strings));
             boolean silent = PunishmentUtils.silent(reason);
             String finalReason = silent ? PunishmentUtils.fixSilent(reason) : reason;
 
-            UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : UUID.fromString("CONSOLE");
+            UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : null;
             UUID subjectUniqueId = target.getUuid();
             target.ban(new Ban(executorUniqueId, subjectUniqueId, reason));
-            if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
-                targetPlayer.getPlayer().kickPlayer(this.lang.get("ban-kick-message-permanent").compatibleString());
-            }
 
+            Bukkit.getScheduler().runTask(this.plugin, () -> {
+                if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
+                    targetPlayer.getPlayer().kickPlayer(this.lang.get("ban.permanent.reason.kick-message", replacer -> replacer
+                            .set("player", targetPlayer.getName())
+                            .set("reason", finalReason)).compatibleString());
+                }
+            });
             if (silent) {
                 Text.sendMessage(sender, this.lang.get("silent-prefix").compatibleString()
-                        .concat(this.lang.get(preBanned ? "banned-player-permanent-overwrite-reason" : "banned-player-permanent-reason", replacer -> replacer
+                        .concat(this.lang.get("ban.permanent.reason.executor-message", replacer -> replacer
                                 .set("player", target.getPlayer().getName())
                                 .set("reason", finalReason)).compatibleString()));
                 return;
             }
-            this.lang.get(preBanned ? "banned-player-permanent-overwrite-reason" : "banned-player-permanent-reason", replacer -> replacer
-                    .set("player", target.getPlayer().getName())
-                    .set("reason", finalReason)).to(sender);
+            this.lang.get("ban.overwritten-message").to(sender);
             return;
         }
         this.lang.get("could-not-find-user").to(sender);

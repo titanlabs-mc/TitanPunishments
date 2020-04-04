@@ -1,7 +1,7 @@
-package dev.titanlabs.punishment.commands.unbancommand;
+package dev.titanlabs.punishment.commands.unban;
 
 import dev.titanlabs.punishment.PunishmentPlugin;
-import dev.titanlabs.punishment.commands.unbancommand.subs.UnBanPlayerSub;
+import dev.titanlabs.punishment.commands.unban.subs.UnBanPlayerSub;
 import dev.titanlabs.punishment.config.Lang;
 import me.hyfe.simplespigot.command.command.SimpleCommand;
 import org.bukkit.command.CommandSender;

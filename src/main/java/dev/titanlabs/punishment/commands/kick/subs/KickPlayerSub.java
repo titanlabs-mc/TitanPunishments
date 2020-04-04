@@ -1,7 +1,6 @@
 package dev.titanlabs.punishment.commands.kick.subs;
 
 import dev.titanlabs.punishment.PunishmentPlugin;
-import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.config.Lang;
 import dev.titanlabs.punishment.objects.punishments.Kick;
 import dev.titanlabs.punishment.objects.user.User;
@@ -13,13 +12,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class KickPlayerSub extends SubCommand<CommandSender> {
-    private final UserCache userCache;
     private final Lang lang;
 
-    public KickPlayerSub(PunishmentPlugin plugin, String permission, boolean isConsole) {
-        super(plugin, permission, isConsole);
-        this.userCache = plugin.getUserCache();
+    public KickPlayerSub(PunishmentPlugin plugin, boolean isConsole) {
+        super(plugin, "", isConsole);
         this.lang = plugin.getLang();
+        this.inheritPermission();
 
         this.addArgument(User.class, "player");
     }

@@ -5,7 +5,7 @@ import dev.titanlabs.punishment.PunishmentEndReason;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class Ban {
+public class Ban implements Punishment {
     private final UUID executor;
     private final UUID subject;
     private final long banTime;
@@ -51,23 +51,28 @@ public class Ban {
         this.expiryTime = this.banTime + length;
     }
 
+    @Override
     public UUID getExecutor() {
         return this.executor;
     }
 
+    @Override
     public boolean isExecutorConsole() {
         return this.executor == null;
     }
 
+    @Override
     public UUID getSubject() {
         return this.subject;
     }
 
+    @Override
     public String getReason() {
         return this.reason;
     }
 
-    public long getBanTime() {
+    @Override
+    public long getPunishmentTime() {
         return this.banTime;
     }
 
@@ -92,6 +97,10 @@ public class Ban {
 
     public PunishmentEndReason getEndReason() {
         return this.endReason;
+    }
+
+    public void setEndReason(PunishmentEndReason endReason) {
+        this.endReason = endReason;
     }
 
     public void end(PunishmentEndReason punishmentEndReason) {

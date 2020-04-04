@@ -30,7 +30,7 @@ public class BanAdapter implements Adapter<Ban> {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("executor", FastUUID.toString(ban.getExecutor()));
         jsonObject.addProperty("subject", FastUUID.toString(ban.getSubject()));
-        jsonObject.addProperty("banTime", ban.getBanTime());
+        jsonObject.addProperty("banTime", ban.getPunishmentTime());
         jsonObject.addProperty("temporary", ban.isTemporary());
         jsonObject.addProperty("reason", ban.getReason());
         jsonObject.addProperty("length", ban.getLength());
