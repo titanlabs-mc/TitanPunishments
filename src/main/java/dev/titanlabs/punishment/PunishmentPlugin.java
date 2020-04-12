@@ -1,11 +1,12 @@
 package dev.titanlabs.punishment;
 
-import dev.titanlabs.punishment.api.Api;
+import dev.titanlabs.punishment.api.PunishmentApi;
 import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.cache.listener.ConnectionListener;
 import dev.titanlabs.punishment.commands.ban.BanCommand;
 import dev.titanlabs.punishment.commands.kick.KickCommand;
+import dev.titanlabs.punishment.commands.tempban.TempBanCommand;
 import dev.titanlabs.punishment.commands.titanpunish.TitanPunishCommand;
 import dev.titanlabs.punishment.commands.unban.UnBanCommand;
 import dev.titanlabs.punishment.config.Lang;
@@ -29,8 +30,8 @@ public final class PunishmentPlugin extends SpigotPlugin {
     private UserCache userCache;
     private IpCache ipCache;
 
-    private Api localApi;
-    private static Api externalApi;
+    private PunishmentApi localPunishmentApi;
+    private static PunishmentApi externalPunishmentApi;
 
     @Override
     public void onEnable() {
@@ -42,8 +43,8 @@ public final class PunishmentPlugin extends SpigotPlugin {
         this.userStorage = new UserStorage(this);
         this.userCache = new UserCache(this);
 
-        this.localApi = new Api(this);
-        externalApi = this.localApi;
+        this.localPunishmentApi = new PunishmentApi(this);
+        externalPunishmentApi = this.localPunishmentApi;
 
         this.registerRegistries(
                 new ArgumentRegistry(this)
@@ -51,9 +52,10 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
         this.registerCommands(
                 new BanCommand(this, "ban", "titanpunish.ban", true),
-                new UnBanCommand(this, "unban", "titanpunish.unban", true),
                 new KickCommand(this, "kick","titanpunish.kick", true),
-                new TitanPunishCommand(this, "titanpunish", "", true)
+                new TempBanCommand(this, "tempban", "titanpunish.tempban", true),
+                new TitanPunishCommand(this, "titanpunish", "", true),
+                new UnBanCommand(this, "unban", "titanpunish.unban", true)
         );
 
         this.registerListeners(
@@ -105,11 +107,11 @@ public final class PunishmentPlugin extends SpigotPlugin {
         this.lang = new Lang(this);
     }
 
-    public Api getLocalApi() {
-        return this.localApi;
+    public PunishmentApi getLocalPunishmentApi() {
+        return this.localPunishmentApi;
     }
 
-    public static Api getExternalApi() {
-        return externalApi;
+    public static PunishmentApi getExternalPunishmentApi() {
+        return externalPunishmentApi;
     }
 }

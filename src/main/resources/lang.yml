@@ -19,47 +19,55 @@ unban:
   not-banned: '&cThat player is not banned.'
   executor-message: '&cYou have successfully unbanned %player%.'
 
+# Overwrite messages
+ban-overwritten-message: '&8[&cWARNING&8] &cYou have overwritten %player%''s previous ban'
+ban-overwrite-fail: '&cThat player is already banned and you are unable to overwrite bans.'
+
 # Ban messages.
 # Available placeholders for the below messages: %player%, %time%, %reason%, %executor%
 ban:
-  overwritten-message: '&8[&cWARNING&8] &cYou have overwritten %player%''s previous ban'
-  overwrite-fail: '&cThat player is already banned and you are unable to overwrite bans.'
   usage: '&c/ban <player> [reason] [-s]'
-  permanent:
-    reason:
-      executor-message: '&cYou have permanently banned %player% for %reason%.'
-      kick-message:
-        - "&cYou have been permanently banned from www.titanlabs.dev"
-        - ""
-        - "&cReason: &4%reason%"
-        - ""
-        - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-    no-reason:
-      executor-message: '&cYou have permanently banned %player%.'
-      kick-message:
-        - "&cYou have been permanently banned from www.titanlabs.dev"
-        - ""
-        - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-  temporary:
-    reason:
-      executor-message: '&cYou have temporarily banned %player% for %reason%.'
-      kick-message:
-        - "&cYou have been banned from www.titanlabs.dev"
-        - ""
-        - "&cReason: &4%reason%"
-        - "&cYour ban will expire in &4%length%"
-        - ""
-        - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-        - ""
-      no-reason:
-        executor-message: '&cYou have temporarily banned %player%.'
-        kick-message:
-          - "&cYou have been banned from www.titanlabs.dev"
-          - ""
-          - "&cYour ban will expire in &4%length%"
-          - ""
-          - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
-          - ""
+  reason:
+    broadcast-message: '&c%player% has been permanently banned for %reason%.'
+    executor-message: '&cYou have permanently banned %player% for %reason%.'
+    kick-message:
+      - "&cYou have been permanently banned from www.titanlabs.dev"
+      - ""
+      - "&cReason: &4%reason%"
+      - ""
+      - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+  no-reason:
+    broadcast-message: '&c%player% has been banned.'
+    executor-message: '&cYou have permanently banned %player%.'
+    kick-message:
+      - "&cYou have been permanently banned from www.titanlabs.dev"
+      - ""
+      - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+
+tempban:
+  usage: '&c/tempban <player> <time> [reason] [-s]'
+  invalid-time: '&cYour time length could not be identified.'
+  reason:
+    broadcast-message: '&c%player% has been temporarily banned for %reason%.'
+    executor-message: '&cYou have temporarily banned %player% for %reason%.'
+    kick-message:
+      - "&cYou have been banned from www.titanlabs.dev"
+      - ""
+      - "&cReason: &4%reason%"
+      - "&cYour ban will expire in &4%length%"
+      - ""
+      - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+      - ""
+  no-reason:
+    broadcast-message: '&c%player% has been temporarily banned.'
+    executor-message: '&cYou have temporarily banned %player%.'
+    kick-message:
+      - "&cYou have been banned from www.titanlabs.dev"
+      - ""
+      - "&cYour ban will expire in &4%length%"
+      - ""
+      - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
+      - ""
 
 kick:
   usage: '&c/kick <player> [reason]'

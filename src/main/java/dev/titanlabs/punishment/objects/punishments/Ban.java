@@ -30,6 +30,15 @@ public class Ban implements Punishment {
         this.temporary = false;
     }
 
+    public Ban(UUID executor, UUID subject, long length) {
+        this.executor = executor;
+        this.subject = subject;
+        this.length = length;
+        this.temporary = true;
+        this.banTime = System.currentTimeMillis();
+        this.expiryTime = this.banTime + length;
+    }
+
     public Ban(UUID executor, UUID subject, String reason, long length) {
         this.executor = executor;
         this.subject = subject;
@@ -39,6 +48,7 @@ public class Ban implements Punishment {
         this.banTime = System.currentTimeMillis();
         this.expiryTime = this.banTime + length;
     }
+
 
     public Ban(UUID executor, UUID subject, String reason, boolean temporary, long banTime, long length, PunishmentEndReason endReason) {
         this.executor = executor;

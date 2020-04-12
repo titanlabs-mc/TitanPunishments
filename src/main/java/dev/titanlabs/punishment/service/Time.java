@@ -10,6 +10,34 @@ public class Time {
         lang = plugin.getLang();
     }
 
+    public static long parseTimeInput(String input) {
+        if (input.endsWith("y") || input.endsWith("years")) {
+            int years = Integer.parseInt(input.split("y")[0]);
+            return years * 365 * 24 * 60 * 60 * 1000;
+        }
+        if (input.endsWith("mo") || input.endsWith("months")) {
+            int months = Integer.parseInt(input.split("mo")[0]);
+            return months * 30 * 24 * 60 * 60 * 1000;
+        }
+        if (input.endsWith("d") || input.endsWith("days")) {
+            int days = Integer.parseInt(input.split("d")[0]);
+            return days * 24 * 60 * 60 * 1000;
+        }
+        if (input.endsWith("h") || input.endsWith("hours")) {
+            int hours = Integer.parseInt(input.split("h")[0]);
+            return hours * 60 * 60 * 1000;
+        }
+        if (input.endsWith("m") || input.endsWith("minutes")) {
+            int minutes = Integer.parseInt(input.split("m")[0]);
+            return minutes * 60 * 1000;
+        }
+        if (input.endsWith("s") || input.endsWith("seconds")) {
+            int seconds = Integer.parseInt(input.split("s")[0]);
+            return seconds * 1000;
+        }
+        return 0;
+    }
+
     public static String format(long milliseconds) {
         boolean containsPrevious = false;
         long initialSeconds = milliseconds / 60;

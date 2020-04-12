@@ -22,3 +22,8 @@ commands:
       - pardon
   kick:
     description: Kick a player from the server
+  tempban:
+    aliases:
+      - temporarilyban
+      - temporaryban
+    description: Temporarily ban a player

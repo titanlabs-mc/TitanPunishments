@@ -35,7 +35,7 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
             boolean preBanned = target.isBanned();
             if (preBanned) {
                 if (!sender.hasPermission("titanpunish.ban.override")) {
-                    this.lang.get("ban.overwrite-fail", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
+                    this.lang.get("ban-overwrite-fail", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
                     return;
                 }
                 target.getActiveBan().setEndReason(PunishmentEndReason.MANUAL);
@@ -51,19 +51,19 @@ public class BanPlayerReasonSub extends SubCommand<CommandSender> {
 
             Bukkit.getScheduler().runTask(this.plugin, () -> {
                 if (targetPlayer.isOnline() && targetPlayer.getPlayer() != null) {
-                    targetPlayer.getPlayer().kickPlayer(this.lang.get("ban.permanent.reason.kick-message", replacer -> replacer
+                    targetPlayer.getPlayer().kickPlayer(this.lang.get("ban.reason.kick-message", replacer -> replacer
                             .set("player", targetPlayer.getName())
                             .set("reason", finalReason)).compatibleString());
                 }
             });
             if (silent) {
                 Text.sendMessage(sender, this.lang.get("silent-prefix").compatibleString()
-                        .concat(this.lang.get("ban.permanent.reason.executor-message", replacer -> replacer
+                        .concat(this.lang.get("ban.reason.executor-message", replacer -> replacer
                                 .set("player", target.getPlayer().getName())
                                 .set("reason", finalReason)).compatibleString()));
                 return;
             }
-            this.lang.get("ban.overwritten-message").to(sender);
+            this.lang.get("ban-overwritten-message").to(sender);
             return;
         }
         this.lang.get("could-not-find-user").to(sender);

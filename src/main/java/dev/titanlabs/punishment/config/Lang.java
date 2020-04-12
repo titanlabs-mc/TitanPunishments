@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Lang {
     private final PunishmentPlugin plugin;
@@ -71,6 +72,12 @@ public class Lang {
                 if (player.hasPermission(permission)) {
                     Text.sendMessage(player, this.compatibleString());
                 }
+            }
+        }
+
+        public void to(Set<Player> players) {
+            for (Player player : players) {
+                Text.sendMessage(player, this.compatibleString());
             }
         }
 

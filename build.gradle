@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group = pluginGroup
+version = '1.0-ALPHA'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'}
+    maven { url 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    implementation 'com.github.Hyfe-JavaDebug:simple-spigot:1.0.3'
+}
+
+processResources {
+    expand project.properties
+}
+
+shadowJar {
+    relocate 'me.hyfe.simplespigot', "dev.titanlabs.punishment.shade.simple-spigot"
+}

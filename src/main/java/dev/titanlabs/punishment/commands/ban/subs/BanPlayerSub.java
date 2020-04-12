@@ -38,11 +38,11 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
             boolean preBanned = target.isBanned();
             if (preBanned) {
                 if (!sender.hasPermission("titanpunish.ban.override")) {
-                    this.lang.get("ban.overwrite-fail", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
+                    this.lang.get("ban-overwrite-fail", replacer -> replacer.set("player", target.getPlayer().getName())).to(sender);
                     return;
                 }
                 target.getActiveBan().setEndReason(PunishmentEndReason.MANUAL);
-                this.lang.get("ban.overwritten-message", replacer -> replacer.set("player", targetPlayer.getName())).to(sender);
+                this.lang.get("ban-overwritten-message", replacer -> replacer.set("player", targetPlayer.getName())).to(sender);
             }
             Bukkit.getScheduler().runTask(this.plugin, () -> {
                 UUID executorUniqueId = sender instanceof Player ? ((Player) sender).getUniqueId() : null;
@@ -52,10 +52,10 @@ public class BanPlayerSub extends SubCommand<CommandSender> {
                     return;
                 }
                 if (targetPlayer.isOnline()) {
-                    targetPlayer.getPlayer().kickPlayer(this.lang.get("ban.permanent.no-reason.kick-message").compatibleString());
+                    targetPlayer.getPlayer().kickPlayer(this.lang.get("ban.no-reason.kick-message").compatibleString());
                 }
             });
-            this.lang.get("ban.permanent.no-reason.executor-message", replacer -> replacer
+            this.lang.get("ban.no-reason.executor-message", replacer -> replacer
                     .set("player", targetPlayer.getName())).to(sender);
         });
     }
