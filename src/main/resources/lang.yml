@@ -13,12 +13,6 @@ seconds: 'seconds'
 
 silent-prefix: '&8[&cSilent&8] '
 
-# Unban
-unban:
-  usage: '&c/unban <player>'
-  not-banned: '&cThat player is not banned.'
-  executor-message: '&cYou have successfully unbanned %player%.'
-
 # Overwrite messages
 ban-overwritten-message: '&8[&cWARNING&8] &cYou have overwritten %player%''s previous ban'
 ban-overwrite-fail: '&cThat player is already banned and you are unable to overwrite bans.'
@@ -79,3 +73,31 @@ kick:
     executor-message: '&cYou have kicked %player%.'
     kick-message:
       - "&cYou have been kicked."
+
+# Unban
+unban:
+  usage: '&c/unban <player>'
+  not-banned: '&cThat player is not banned.'
+  executor-message: '&cYou have successfully unbanned %player%.'
+
+# IP Info.
+# You can use the following placeholders in account lists: %player%, %address%, %online-accounts%, %banned-accounts%, %muted-accounts%, %offline-accounts%
+# Use common sense as to where you can use them.
+ipinfo:
+  usage:
+    - '&c/ipinfo <address>'
+    - '&c/ipinfo <player> [accounts]'
+  banned-format: '&4'
+  muted-format: '&6'
+  online-format: '&a'
+  offline-format: '&7'
+  player:
+    info:
+      - "&c%player%'s IP address: %address%"
+    account-list:
+      - "&c%player%'s accounts &7[&4Banned&7] [&6Muted&7]"
+      - "%online-accounts%, %banned-accounts%, %muted-accounts%, %offline-accounts%"
+  ip-address:
+    account-list:
+      - "&c%address%'s associations &7[&4Banned&7] [&6Muted&7]"
+      - "%online-accounts%, %banned-accounts%, %muted-accounts%, %offline-accounts%"

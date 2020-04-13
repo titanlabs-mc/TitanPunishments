@@ -5,6 +5,7 @@ import dev.titanlabs.punishment.cache.IpCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.cache.listener.ConnectionListener;
 import dev.titanlabs.punishment.commands.ban.BanCommand;
+import dev.titanlabs.punishment.commands.ipinfo.IpInfoCommand;
 import dev.titanlabs.punishment.commands.kick.KickCommand;
 import dev.titanlabs.punishment.commands.tempban.TempBanCommand;
 import dev.titanlabs.punishment.commands.titanpunish.TitanPunishCommand;
@@ -52,6 +53,7 @@ public final class PunishmentPlugin extends SpigotPlugin {
 
         this.registerCommands(
                 new BanCommand(this, "ban", "titanpunish.ban", true),
+                new IpInfoCommand(this, "ipinfo", "titanpunish.ipinfo", true),
                 new KickCommand(this, "kick","titanpunish.kick", true),
                 new TempBanCommand(this, "tempban", "titanpunish.tempban", true),
                 new TitanPunishCommand(this, "titanpunish", "", true),
