@@ -26,19 +26,13 @@ public class PlayerPreLoginListener implements Listener {
         StrippedUser user = this.storage.load(FastUUID.toString(event.getUniqueId()));
 
         if (user != null && user.isBanned()) {
-            StringBuilder configLocation = new StringBuilder("ban.");
-            if (user.getBan().isTemporary()) {
-                configLocation.append("temporary.");
-            } else {
-                configLocation.append("permanent.");
-            }
+            StringBuilder configLocation = new StringBuilder(user.getBan().isTemporary() ? "tempban." : "ban.");
             if (user.getBan().getReason() != null) {
                 configLocation.append("reason");
             } else {
                 configLocation.append("no-reason");
             }
             configLocation.append(".kick-message");
-            System.out.println(configLocation.toString());
             event.setKickMessage(this.lang.get(configLocation.toString(), replacer -> replacer
                     .set("reason", user.getBan().getReason())
                     .set("length", General.formatSeconds(user.getBan().getRemainingTime(TimeUnit.SECONDS)))).compatibleString());

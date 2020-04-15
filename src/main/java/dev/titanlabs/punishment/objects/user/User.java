@@ -6,15 +6,13 @@ import dev.titanlabs.punishment.objects.punishments.Ban;
 import dev.titanlabs.punishment.objects.punishments.Kick;
 import dev.titanlabs.punishment.objects.punishments.Mute;
 import dev.titanlabs.punishment.objects.punishments.Warning;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.util.Set;
 import java.util.UUID;
 
 public class User {
     private final UUID uuid;
-    private final Player player;
+    private final String name;
     private Set<Ban> bans = Sets.newHashSet();
     private Ban activeBan;
     private Set<Mute> mutes = Sets.newHashSet();
@@ -25,14 +23,14 @@ public class User {
     private IpAddress ipAddress;
     private Set<IpAddress> ipAddresses = Sets.newHashSet();
 
-    public User(UUID uuid) {
+    public User(UUID uuid, String name) {
         this.uuid = uuid;
-        this.player = Bukkit.getPlayer(uuid);
+        this.name = name;
     }
 
-    public User(UUID uuid, Set<Ban> bans, Ban activeBan, Set<Mute> mutes, Mute activeMute, Set<Warning> warnings, Set<Warning> activeWarnings, Set<Kick> kicks, Set<IpAddress> ipAddresses) {
+    public User(UUID uuid, String name, Set<Ban> bans, Ban activeBan, Set<Mute> mutes, Mute activeMute, Set<Warning> warnings, Set<Warning> activeWarnings, Set<Kick> kicks, Set<IpAddress> ipAddresses) {
         this.uuid = uuid;
-        this.player = Bukkit.getPlayer(uuid);
+        this.name = name;
         this.bans = bans;
         this.activeBan = activeBan;
         this.mutes = mutes;
@@ -43,8 +41,8 @@ public class User {
         this.ipAddresses = ipAddresses;
     }
 
-    public Player getPlayer() {
-        return this.player;
+    public String getName() {
+        return this.name;
     }
 
     public UUID getUuid() {

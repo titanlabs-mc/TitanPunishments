@@ -1,6 +1,5 @@
 package dev.titanlabs.punishment.api;
 
-import com.google.common.collect.Sets;
 import dev.titanlabs.punishment.PunishmentEndReason;
 import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.cache.IpCache;
@@ -44,10 +43,14 @@ public class PunishmentApi {
     public void banUser(User user, Ban ban, CommandSender executor, boolean silent) {
         user.ban(ban);
         String basePath = (ban.isTemporary() ? "tempban." : "ban.").concat(ban.getReason() == null ? "no-reason." : "reason.");
+        Player targetPlayer = Bukkit.getPlayer(user.getName());
         this.plugin.runSync(() -> {
-            if (user.getPlayer().isOnline()) {
+            if (targetPlayer != null && targetPlayer.isOnline()) {
                 String path = basePath.concat("kick-message");
-                user.getPlayer().kickPlayer(this.lang.get(path).compatibleString());
+                targetPlayer.kickPlayer(this.lang.get(path, replacer -> replacer
+                        .set("reason", ban.getReason())
+                        .set("executor", executor.getName())
+                        .set("player", user.getName())).compatibleString());
             }
         });
         this.sendOtherMessages(basePath, user, executor, ban, silent);
@@ -56,37 +59,46 @@ public class PunishmentApi {
     public void kickUser(User user, Kick kick, CommandSender executor, boolean silent) {
         user.kick(kick);
         String basePath = "kick.".concat(kick.getReason() == null ? "no-reason." : "reason.");
-        this.plugin.runSync(() -> user.getPlayer().kickPlayer(this.lang.get(basePath.concat("kick-message")).compatibleString()));
+        Player targetPlayer = Bukkit.getPlayer(user.getName());
+        this.plugin.runSync(() -> targetPlayer.kickPlayer(this.lang.get(basePath.concat("kick-message"), replacer -> replacer
+                .set("reason", kick.getReason())
+                .set("executor", executor.getName())
+                .set("player", targetPlayer.getName())).compatibleString()));
         this.sendOtherMessages(basePath, user, executor, kick, silent);
     }
 
     public void unban(User user, CommandSender executor, PunishmentEndReason endReason, boolean silent) {
+        System.out.println("A");
         user.unban(endReason);
+        System.out.println("B");
         String basePath = "unban.";
-        this.lang.get("executor-message", replacer -> replacer
-                .set("executor", executor.getName())
-                .set("player", user.getPlayer().getName()));
+        System.out.println("C");
+        this.sendOtherMessages(basePath, user, executor, null, silent);
+        System.out.println("D");
     }
 
     private void sendOtherMessages(String basePath, User user, CommandSender executor, Punishment punishment, boolean silent) {
-        String broadcastPath = basePath.concat("broadcast-message");
-        this.lang.get(basePath.concat("executor-message"), replacer -> replacer
-                .set("executor", executor.getName())
-                .set("player", user.getPlayer().getName())).to(executor);
-        if (!silent) {
-            this.lang.get(basePath.concat("broadcast-message"), replacer -> replacer
+        this.plugin.runSync(() -> {
+            String broadcastMessage = this.lang.get(basePath.concat("broadcast-message"), replacer -> replacer
                     .set("executor", executor.getName())
-                    .set("player", user.getPlayer().getName())
-                    .set("reason", punishment.getReason())).to(Sets.newHashSet(Bukkit.getOnlinePlayers()));
-        } else {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.hasPermission("titanpunish.staff")) {
-                    Text.sendMessage(player, this.lang.get("silent-prefix").compatibleString().concat(this.lang.get(broadcastPath, replacer -> replacer
-                            .set("executor", executor.getName())
-                            .set("player", user.getPlayer().getName())
-                            .set("reason", punishment.getReason())).compatibleString()));
+                    .set("player", user.getName())
+                    .set("reason", punishment.getReason())).compatibleString();
+
+            this.lang.get(basePath.concat("executor-message"), replacer -> replacer
+                    .set("executor", executor.getName())
+                    .set("player", user.getName())
+                    .set("reason", punishment.getReason())).to(executor);
+            if (!silent) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    Text.sendMessage(player, broadcastMessage);
+                }
+            } else {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (player.hasPermission("titanpunish.staff")) {
+                        Text.sendMessage(player, this.lang.get("silent-prefix").compatibleString().concat(broadcastMessage));
+                    }
                 }
             }
-        }
+        });
     }
 }

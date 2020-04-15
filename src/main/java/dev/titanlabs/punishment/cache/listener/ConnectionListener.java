@@ -2,6 +2,7 @@ package dev.titanlabs.punishment.cache.listener;
 
 import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.cache.IpCache;
+import dev.titanlabs.punishment.cache.OfflineUserCache;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.objects.user.IpAddress;
 import dev.titanlabs.punishment.objects.user.User;
@@ -14,10 +15,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.concurrent.CompletableFuture;
 
 public class ConnectionListener implements Listener {
+    private final OfflineUserCache offlineUserCache;
     private final UserCache userCache;
     private final IpCache ipCache;
 
     public ConnectionListener(PunishmentPlugin plugin) {
+        this.offlineUserCache = plugin.getOfflineUserCache();
         this.userCache = plugin.getUserCache();
         this.ipCache = plugin.getIpCache();
     }
@@ -30,6 +33,7 @@ public class ConnectionListener implements Listener {
         CompletableFuture<IpAddress> completableIpAddress = this.ipCache.get(player);
         completableUser.thenAccept(user -> completableIpAddress.thenAccept(user::setIpAddress));
         completableIpAddress.thenAccept(ipAddress -> ipAddress.registerOnline(player.getUniqueId()));
+        this.offlineUserCache.add(player.getName(), player.getUniqueId());
     }
 
     @EventHandler

@@ -82,6 +82,7 @@ unban:
   usage: '&c/unban <player>'
   not-banned: '&cThat player is not banned.'
   executor-message: '&cYou have successfully unbanned %player%.'
+  broadcast-message: '&c%player% has been unbanned by %executor%'
 
 # IP Info.
 # You can use the following placeholders in account lists: %player%, %address%, %online-accounts%, %banned-accounts%, %muted-accounts%, %offline-accounts%

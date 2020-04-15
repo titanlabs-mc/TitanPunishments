@@ -26,11 +26,7 @@ public class UserCache extends FutureCache<UUID, User> {
         return this.get(uuid).thenApply(optionalUser -> {
             if (!optionalUser.isPresent()) {
                 User user = this.storage.load(FastUUID.toString(uuid));
-                if (user == null) {
-                    return this.set(uuid, new User(uuid));
-                } else {
-                    return this.set(uuid, user);
-                }
+                return this.set(uuid, user == null ? new User() : user);
             }
             return optionalUser.get();
         }).exceptionally(ex -> {
