@@ -5,6 +5,6 @@
 
 *.bin
 *.lock
-.gradle
+/.gradle/5.2.1
 
 *.iml

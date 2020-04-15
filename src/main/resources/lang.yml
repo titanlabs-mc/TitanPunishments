@@ -62,14 +62,17 @@ tempban:
       - ""
       - "&cIf you think this is wrong, please appeal at titanlabs.dev/appeal"
       - ""
-
+# Kick Messages
+# Available placeholders are %player%, %executor% and %reason%.
 kick:
   usage: '&c/kick <player> [reason]'
   reason:
+    broadcast-message: '&c%player% has been kicked for %reason%'
     executor-message: '&cYou have kicked %player% for %reason%.'
     kick-message:
       - "&cYou have been kicked for %reason%."
   no-reason:
+    broadcast-message: '&c%player% has been kicked.'
     executor-message: '&cYou have kicked %player%.'
     kick-message:
       - "&cYou have been kicked."

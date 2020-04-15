@@ -26,7 +26,7 @@ public class KickAdapter implements Adapter<Kick> {
         jsonObject.addProperty("executor", FastUUID.toString(kick.getExecutor()));
         jsonObject.addProperty("subject", FastUUID.toString(kick.getSubject()));
         jsonObject.addProperty("reason", kick.getReason());
-        jsonObject.addProperty("kickTime", kick.getKickTime());
+        jsonObject.addProperty("kickTime", kick.getPunishmentTime());
         return jsonObject;
     }
 }

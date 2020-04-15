@@ -7,23 +7,32 @@ authors: [Zak Shearman, Hyfe]
 website: www.titanlabs.dev
 
 commands:
-  titanpunish:
-    description: Informative Command
-    aliases:
-      - titanpunishments
-      - punishments
   ban:
     description: Ban a player
     aliases:
       - banish
-  unban:
-    description: Unban a player
+
+  ipinfo:
+    description: Get innformation on a player's accounts/IPs
     aliases:
-      - pardon
+      - dupeip
+
   kick:
     description: Kick a player from the server
+
   tempban:
     aliases:
       - temporarilyban
       - temporaryban
     description: Temporarily ban a player
+
+  titanpunish:
+    description: Informative Command
+    aliases:
+      - titanpunishments
+      - punishments
+
+  unban:
+    description: Unban a player
+    aliases:
+      - pardon

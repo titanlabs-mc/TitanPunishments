@@ -2,7 +2,7 @@ package dev.titanlabs.punishment.objects.punishments;
 
 import java.util.UUID;
 
-public class Mute {
+public class Mute implements Punishment {
     private final UUID executor;
     private final UUID subject;
     private final String reason;
@@ -39,20 +39,29 @@ public class Mute {
         this.expiryTime = this.muteTime + length;
     }
 
+    @Override
     public UUID getExecutor() {
         return this.executor;
     }
 
+    @Override
+    public boolean isExecutorConsole() {
+        return this.executor == null;
+    }
+
+    @Override
     public UUID getSubject() {
         return this.subject;
     }
 
-    public String getReason() {
-        return this.reason;
+    @Override
+    public long getPunishmentTime() {
+        return this.muteTime;
     }
 
-    public long getMuteTime() {
-        return this.muteTime;
+    @Override
+    public String getReason() {
+        return this.reason;
     }
 
     public boolean isTemporary() {

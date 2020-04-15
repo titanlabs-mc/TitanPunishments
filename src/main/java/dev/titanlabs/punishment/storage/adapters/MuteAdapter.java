@@ -28,7 +28,7 @@ public class MuteAdapter implements Adapter<Mute> {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("executor", FastUUID.toString(mute.getExecutor()));
         jsonObject.addProperty("subject", FastUUID.toString(mute.getSubject()));
-        jsonObject.addProperty("muteTime", mute.getMuteTime());
+        jsonObject.addProperty("muteTime", mute.getPunishmentTime());
         jsonObject.addProperty("temporary", mute.isTemporary());
         jsonObject.addProperty("reason", mute.getReason());
         jsonObject.addProperty("length", mute.getLength());

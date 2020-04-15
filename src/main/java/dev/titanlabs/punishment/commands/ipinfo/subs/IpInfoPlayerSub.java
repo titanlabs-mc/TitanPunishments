@@ -1,17 +1,12 @@
 package dev.titanlabs.punishment.commands.ipinfo.subs;
 
-import com.google.common.collect.Sets;
 import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.config.Lang;
-import dev.titanlabs.punishment.objects.user.IpAddress;
 import dev.titanlabs.punishment.objects.user.User;
 import me.hyfe.simplespigot.command.command.SubCommand;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-
-import java.util.Set;
-import java.util.UUID;
 
 public class IpInfoPlayerSub extends SubCommand<CommandSender> {
     private final UserCache userCache;
@@ -27,37 +22,16 @@ public class IpInfoPlayerSub extends SubCommand<CommandSender> {
 
     @Override
     public void onExecute(CommandSender sender, String[] args) {
-        OfflinePlayer player = this.parseArgument(args, 0);
-        this.userCache.get(player.getUniqueId()).thenAccept(optionalTarget -> {
-            if (optionalTarget.isPresent()) {
-                Set<User> associatedUsers = Sets.newHashSet();
-
-                User target = optionalTarget.get();
-                for (IpAddress ipAddress : target.getIpAddresses()) {
-                    for (UUID uuid : ipAddress.getUniqueIds()) {
-                        this.userCache.getSync(uuid).ifPresent(associatedUsers::add);
-                    }
-                }
-                Set<User> bannedUsers = Sets.newHashSet();
-                Set<User> mutedUsers = Sets.newHashSet();
-                Set<User> onlineUsers = Sets.newHashSet();
-                Set<User> offlineUsers = Sets.newHashSet();
-                for (User user : associatedUsers) {
-                    if (user.isBanned()) {
-                        bannedUsers.add(user);
-                    } else if (user.isMuted()) {
-                        mutedUsers.add(user);
-                    } else if (user.getPlayer().isOnline()) {
-                        onlineUsers.add(user);
-                    } else {
-                        offlineUsers.add(user);
-                    }
-                }
+        OfflinePlayer offlineTargetPlayer = this.parseArgument(args, 0);
+        this.userCache.get(offlineTargetPlayer.getUniqueId()).thenAccept(optionalUser -> {
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                this.lang.get("ipinfo.player.info", replacer -> replacer
+                        .set("address", user.getIpAddress().getAddress())
+                        .set("player", user.getPlayer().getName())).to(sender);
                 return;
             }
-            this.lang.get("could-not-find-user").
-
-                    to(sender);
+            this.lang.get("could-not-find-user").to(sender);
         });
     }
 }

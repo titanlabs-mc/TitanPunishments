@@ -27,7 +27,7 @@ public class WarningAdapter implements Adapter<Warning> {
         jsonObject.addProperty("executor", FastUUID.toString(warning.getExecutor()));
         jsonObject.addProperty("subject", FastUUID.toString(warning.getSubject()));
         jsonObject.addProperty("reason", warning.getReason());
-        jsonObject.addProperty("warningTime", warning.getWarningTime());
+        jsonObject.addProperty("warningTime", warning.getPunishmentTime());
         jsonObject.addProperty("length", warning.getLength());
         return jsonObject;
     }

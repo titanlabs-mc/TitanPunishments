@@ -2,7 +2,7 @@ package dev.titanlabs.punishment.objects.punishments;
 
 import java.util.UUID;
 
-public class Warning {
+public class Warning implements Punishment {
     private final UUID executor;
     private final UUID subject;
     private final String reason;
@@ -35,19 +35,28 @@ public class Warning {
         this.expiryTime = this.warningTime + length;
     }
 
+    @Override
     public UUID getExecutor() {
         return this.executor;
     }
 
+    @Override
+    public boolean isExecutorConsole() {
+        return this.executor == null;
+    }
+
+    @Override
     public UUID getSubject() {
         return this.subject;
     }
 
+    @Override
     public String getReason() {
         return this.reason;
     }
 
-    public long getWarningTime() {
+    @Override
+    public long getPunishmentTime() {
         return this.warningTime;
     }
 
