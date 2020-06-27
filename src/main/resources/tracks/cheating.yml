@@ -1,0 +1,17 @@
+name: 'Cheating'
+identifier: 'cheating' # If this is ever changed, all punishments under this track will not load onto a user's profile.
+
+# The number refers to the violation (how many times they now will have received the punishment).
+# If it is your first time, you get warned, second time, kicked, etc..
+
+# Each violation uses actions. Please see our wiki for a detailed explanation:
+# A quick explanation is [action] (expiryTime) {reason} where expiryTime is applicable appropriately
+
+1:
+  - '[ban] (7days) {Cheating}'
+
+2:
+  - '[ban] (30days) {Cheating}'
+
+3:
+  - '[ban] {Cheating}'

@@ -1,4 +1,4 @@
-package dev.titanlabs.punishment.menus;
+package dev.titanlabs.punishment.menus.menus;
 
 import me.hyfe.simplespigot.menu.Menu;
 import org.bukkit.entity.Player;

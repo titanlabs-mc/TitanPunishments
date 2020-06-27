@@ -6,33 +6,4 @@ api-version: '1.13'
 authors: [Zak Shearman, Hyfe]
 website: www.titanlabs.dev
 
-commands:
-  ban:
-    description: Ban a player
-    aliases:
-      - banish
-
-  ipinfo:
-    description: Get innformation on a player's accounts/IPs
-    aliases:
-      - dupeip
-
-  kick:
-    description: Kick a player from the server
-
-  tempban:
-    aliases:
-      - temporarilyban
-      - temporaryban
-    description: Temporarily ban a player
-
-  titanpunish:
-    description: Informative Command
-    aliases:
-      - titanpunishments
-      - punishments
-
-  unban:
-    description: Unban a player
-    aliases:
-      - pardon
+commands: []

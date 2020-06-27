@@ -1,0 +1,34 @@
+title: '&cPunishing %player%'
+rows: 3
+
+items:
+  '12':
+    item:
+      material: paper:0
+      name: '&cSpamming'
+      lore:
+        - ''
+        - '&7Punish the player for spamming.'
+      actions:
+        - '[track] {spamming}'
+  '14':
+    item:
+      material: stick:0
+      name: '&cCamping'
+      lore:
+        - ''
+        - '&7Punish the player for camping.'
+      actions:
+        - '[track] {camping}'
+  '16':
+    item:
+      material: stick:0
+      name: '&cCheating'
+      lore:
+        - ''
+        - '&7Punish the player for cheating.'
+      actions:
+        - '[track] {cheating}'
+  filler:
+    slots: fill
+    material: red_stained_glass_pane
