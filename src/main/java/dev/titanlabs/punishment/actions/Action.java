@@ -2,8 +2,8 @@ package dev.titanlabs.punishment.actions;
 
 public abstract class Action {
     private final String type;
-    private final String condition;
-    private final String value;
+    protected final String condition;
+    protected final String value;
 
     public Action(String type, String condition, String value) {
         this.type = type;

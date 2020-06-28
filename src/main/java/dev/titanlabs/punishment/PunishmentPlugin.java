@@ -87,6 +87,10 @@ public class PunishmentPlugin extends SpigotPlugin {
         return this.getConfigStore().getConfig(name);
     }
 
+    public UserStorage getUserStorage() {
+        return this.userStorage;
+    }
+
     public UserCache getUserCache() {
         return this.userCache;
     }
