@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 public class MuteAction extends Action {
     private final UserCache userCache;
 
-    public MuteAction(PunishmentPlugin plugin, String condition, String value) {
-        super(condition, value);
+    public MuteAction(String type, PunishmentPlugin plugin, String condition, String value) {
+        super(type, condition, value);
         this.userCache = plugin.getUserCache();
     }
 

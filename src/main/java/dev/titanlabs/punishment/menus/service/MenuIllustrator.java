@@ -1,10 +1,9 @@
 package dev.titanlabs.punishment.menus.service;
 
-import com.google.common.cache.Cache;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import dev.titanlabs.punishment.actions.Action;
-import dev.titanlabs.punishment.actions.ActionManager;
+import dev.titanlabs.punishment.manager.ActionManager;
 import dev.titanlabs.punishment.actions.types.MenuAction;
 import dev.titanlabs.punishment.menus.MenuFactory;
 import io.github.battlepass.menus.MenuFactory;

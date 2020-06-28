@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 public class KickAction extends Action {
     private final UserCache userCache;
 
-    public KickAction(PunishmentPlugin plugin, String condition, String value) {
-        super(condition, value);
+    public KickAction(String type, PunishmentPlugin plugin, String condition, String value) {
+        super(type, condition, value);
         this.userCache = plugin.getUserCache();
     }
 
