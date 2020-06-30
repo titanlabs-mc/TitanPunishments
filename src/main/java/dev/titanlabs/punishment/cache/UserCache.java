@@ -61,4 +61,10 @@ public class UserCache extends FutureCache<UUID, User> {
             this.load(player.getUniqueId());
         }
     }
+
+    public void flush() {
+        for (User user : this.getSubCache().asMap().values()) {
+            this.storage.save(FastUUID.toString(user.getUuid()), user);
+        }
+    }
 }

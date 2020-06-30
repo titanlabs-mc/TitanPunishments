@@ -6,4 +6,23 @@ api-version: '1.13'
 authors: [Zak Shearman, Hyfe]
 website: www.titanlabs.dev
 
-commands: []
+commands:
+  punishment:
+    description: 'View general punishment commands'
+    aliases:
+      - 'punish'
+      - 'tp'
+  ban:
+    description: 'Ban a player'
+  kick:
+    description: 'Kick a player'
+  mute:
+    description: 'Mute a player'
+  warn:
+    description: 'Warn a player'
+
+permissions:
+  punishment.admin:
+    description: 'Have the ability to execute /punishment'
+  punishment.ban:
+    description: 'Have the ability to execute /ban'

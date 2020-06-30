@@ -27,7 +27,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testCompile 'junit:junit:4.12'
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
-    implementation 'com.github.Hyfe-JavaDebug:simple-spigot:1.0.7.6.8'
+    implementation 'com.github.Hyfe-JavaDebug:simple-spigot:1.0.8.1'
 }
 
 processResources {
