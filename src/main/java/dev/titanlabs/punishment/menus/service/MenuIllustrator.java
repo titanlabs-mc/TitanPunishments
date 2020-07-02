@@ -1,15 +1,10 @@
 package dev.titanlabs.punishment.menus.service;
 
+import com.google.common.cache.Cache;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.actions.Action;
-import dev.titanlabs.punishment.manager.ActionManager;
-import dev.titanlabs.punishment.actions.types.MenuAction;
-import dev.titanlabs.punishment.menus.MenuFactory;
-import io.github.battlepass.menus.MenuFactory;
-import io.github.battlepass.menus.service.action.Action;
-import io.github.battlepass.menus.service.action.DynamicAction;
-import io.github.battlepass.menus.service.action.MenuAction;
 import me.hyfe.simplespigot.config.Config;
 import me.hyfe.simplespigot.menu.Menu;
 import me.hyfe.simplespigot.menu.service.MenuService;
@@ -24,16 +19,17 @@ import java.util.logging.Level;
 
 public class MenuIllustrator {
 
-    public void draw(Menu menu, Config config, MenuFactory menuFactory, Player player, ActionManager actionManager, Map<String, Runnable> customActions, Replace replace) {
+    public void draw(Menu menu, Config config, PunishmentPlugin plugin, Player player, Map<String, Runnable> customActions, Replace replace) {
         Function<Integer, Set<Action>> actionSupplier = slot -> {
             String id = menu.getClass().getSimpleName();
+            Cache<String, Map<Integer, Set<Action>>> actionCache = plugin.getActionCache();
             Map<Integer, Set<Action>> actionsMap = actionCache.getIfPresent(id);
             if (actionsMap != null && actionsMap.containsKey(slot)) {
                 return actionsMap.get(slot);
             } else {
                 Set<Action> actions = Sets.newLinkedHashSet();
                 for (String action : config.stringList(String.format("menu.%s.actions", slot))) {
-                    actions.add(Action.parse(action));
+                    actions.add(plugin.getActionManager().parse(action));
                 }
                 try {
                     actionCache.get(id, Maps::newHashMap).put(slot, actions);
@@ -57,13 +53,7 @@ public class MenuIllustrator {
                             .item(config, String.format("menu.%s.item", key), replace)
                             .onClick((menuItem, clickType) -> {
                                 for (Action action : actionSupplier.apply(slot)) {
-                                    if (action instanceof MenuAction) {
-                                        ((MenuAction) action).accept(menuFactory, menu, player);
-                                    } else if (action instanceof DynamicAction) {
-                                        for (Map.Entry<String, Runnable> customAction : customActions.entrySet()) {
-                                            ((DynamicAction) action).accept(customAction.getKey(), customAction.getValue());
-                                        }
-                                    }
+                                    plugin.getActionManager().act(action, player, menu);
                                 }
                             }));
                 }

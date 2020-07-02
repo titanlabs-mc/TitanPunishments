@@ -4,6 +4,7 @@ import com.sun.istack.internal.Nullable;
 import dev.titanlabs.punishment.PunishmentPlugin;
 import dev.titanlabs.punishment.actions.Action;
 import dev.titanlabs.punishment.actions.types.*;
+import me.hyfe.simplespigot.menu.Menu;
 import org.bukkit.entity.Player;
 
 public class ActionManager {
@@ -13,8 +14,11 @@ public class ActionManager {
         this.plugin = plugin;
     }
 
-    public void parseAndAct(String input, @Nullable Player player) {
-        Action action = this.parse(input);
+    public void parseAndAct(String input, @Nullable Player player, @Nullable Menu menu) {
+        this.act(this.parse(input), player, menu);
+    }
+
+    public void act(Action action, @Nullable Player player, @Nullable Menu menu) {
         if (action instanceof BanAction) {
             ((BanAction) action).execute(player);
         } else if (action instanceof KickAction) {

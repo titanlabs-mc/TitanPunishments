@@ -9,7 +9,6 @@ import dev.titanlabs.punishment.objects.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Map;
 import java.util.logging.Level;
 
 public class TrackAction extends Action {
@@ -30,13 +29,7 @@ public class TrackAction extends Action {
                 return;
             }
             User user = optionalUser.get();
-            Map<String, Integer> trackPunishments = user.getTrackPunishments();
-            int previousPunishments = 0;
-            if (trackPunishments.containsKey(this.value)) {
-                previousPunishments = trackPunishments.get(this.value);
-            }
-
-
+            user.punishForTrack(this.track);
         });
     }
 

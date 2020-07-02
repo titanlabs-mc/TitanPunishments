@@ -1,17 +1,19 @@
 package dev.titanlabs.punishment.menus.menus;
 
-import me.hyfe.simplespigot.menu.Menu;
+import dev.titanlabs.punishment.PunishmentPlugin;
+import dev.titanlabs.punishment.menus.service.extensions.ConfigMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-// STATIC, no configurability
-public class PortalMenu extends Menu {
+public class PortalMenu extends ConfigMenu {
 
-    public PortalMenu(Player player) {
-        super(player, "portal", 1);
+    public PortalMenu(PunishmentPlugin plugin, Player player) {
+        super(plugin, plugin.getConfig("portal-menu"), player);
     }
 
     @Override
     public void redraw() {
-
+        this.drawConfigItems(replacer -> replacer
+                .set("online_players", Bukkit.getOnlinePlayers().size()));
     }
 }

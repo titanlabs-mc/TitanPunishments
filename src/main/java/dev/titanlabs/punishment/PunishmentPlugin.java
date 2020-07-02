@@ -1,7 +1,11 @@
 package dev.titanlabs.punishment;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Maps;
+import dev.titanlabs.punishment.actions.Action;
 import dev.titanlabs.punishment.api.PunishmentApi;
+import dev.titanlabs.punishment.api.implementation.PunishmentApiImpl;
 import dev.titanlabs.punishment.cache.UserCache;
 import dev.titanlabs.punishment.manager.ActionManager;
 import dev.titanlabs.punishment.manager.TrackManager;
@@ -14,23 +18,36 @@ import me.hyfe.simplespigot.storage.StorageSettings;
 import org.bukkit.event.HandlerList;
 
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class PunishmentPlugin extends SpigotPlugin {
     protected static PunishmentApi api;
+    private PunishmentApi localApi;
     private UserStorage userStorage;
     private UserCache userCache;
     private ActionManager actionManager;
     private TrackManager trackManager;
     private MenuIllustrator menuIllustrator;
     private MenuFactory menuFactory;
+    private Cache<String, Map<Integer, Set<Action>>> actionCache;
 
     public void load() {
+        this.setStorageSettings();
+
         this.userStorage = new UserStorage(this);
         this.userCache = new UserCache(this);
         this.actionManager = new ActionManager(this);
         this.trackManager = new TrackManager(this);
+
+        this.localApi = new PunishmentApiImpl();
+        api = this.localApi;
+
         this.menuIllustrator = new MenuIllustrator();
         this.menuFactory = new MenuFactory(this);
+
+        this.actionCache = CacheBuilder.newBuilder().expireAfterAccess(20, TimeUnit.SECONDS).build();
 
         this.userCache.loadOnline();
     }
@@ -79,6 +96,10 @@ public class PunishmentPlugin extends SpigotPlugin {
         System.gc();
     }
 
+    public PunishmentApi getLocalApi() {
+        return this.localApi;
+    }
+
     public static PunishmentApi getApi() {
         return api;
     }
@@ -109,5 +130,9 @@ public class PunishmentPlugin extends SpigotPlugin {
 
     public MenuFactory getMenuFactory() {
         return this.menuFactory;
+    }
+
+    public Cache<String, Map<Integer, Set<Action>>> getActionCache() {
+        return this.actionCache;
     }
 }
